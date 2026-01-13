@@ -1,0 +1,100 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+
+.grid-bg {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 100px 100px;
+  transform: translateZ(-100px);
+}
+
+#world {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Animations */
+@keyframes radar-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.8; }
+}
+
+@keyframes radar-ripple {
+  0% { width: 100%; height: 100%; opacity: 0.8; }
+  100% { width: 300%; height: 300%; opacity: 0; }
+}
+
+.minimap-viewport {
+  animation: radar-pulse 2s infinite;
+}
+
+.minimap-viewport::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 100%; height: 100%;
+  border: 1px solid #ff4444;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: radar-ripple 2s infinite;
+}
+
+.read-more::after {
+  content: '→';
+  transition: transform 0.3s;
+  margin-left: 0.5rem;
+}
+.card:hover .read-more::after {
+  transform: translateX(5px);
+}
+
+/* Scrollbar hiding */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* --- Minimap Radar Animations --- */
+
+/* 1. The main red dot pulse */
+.minimap-viewport {
+  animation: radar-pulse 2s infinite;
+  /* Crucial for alignment: allows us to position it exactly center */
+  transform-origin: center center; 
+}
+
+/* 2. The expanding ripple ring */
+.minimap-viewport::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ff4444;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: radar-ripple 2s infinite;
+}
+
+/* Keyframes */
+@keyframes radar-pulse {
+  0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.5); }
+}
+
+@keyframes radar-ripple {
+  0% { width: 100%; height: 100%; opacity: 0.8; }
+  100% { width: 400%; height: 400%; opacity: 0; }
+}
+
+

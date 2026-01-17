@@ -1,8 +1,0 @@
-[phases.setup]
-nixPkgs = ["php82", "php82Extensions.pdo_mysql", "nginx"]
-
-[phases.build]
-cmds = ["php artisan optimize"]
-
-[start]
-cmd = "echo 'Starting Nginx...' && nginx -c /assets/nginx.conf"

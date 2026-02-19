@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-# 1. Install system dependencies (Updated to include WebP and Graphic libraries)
+# 1. Install system dependencies (including Node.js and NPM directly)
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
@@ -13,8 +13,8 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     gnupg \
-    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs
+    nodejs \
+    npm
 
 # 2. Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

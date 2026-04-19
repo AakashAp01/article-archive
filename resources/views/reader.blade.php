@@ -1,7 +1,17 @@
 @extends('layout.app')
 @section('title', $article->title)
 @section('seo_description', $article->excerpt ?? Str::limit(strip_tags($article->content), 160))
-@section('keywords', implode(', ', $article->tags ?? []))
+@php
+    $tags = $article->tags;
+
+    if (is_string($tags)) {
+        $tags = json_decode($tags, true);
+    }
+
+    $tags = is_array($tags) ? $tags : [];
+@endphp
+
+@section('keywords', implode(', ', $tags))
 @section('og_type', 'article')
 @section('og_title', $article->title)
 @section('og_description', $article->excerpt ?? Str::limit(strip_tags($article->content), 160))

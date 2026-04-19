@@ -18,7 +18,6 @@ use App\Livewire\LoginManager;
 use App\Livewire\ResetPassword;
 use App\Livewire\SavedArticles;
 use App\Livewire\SettingsManager;
-use Illuminate\Support\Facades\Artisan;
 
 // 1. Public Pages
 Route::get('/', function () { return view('welcome'); })->name('welcome');
@@ -87,14 +86,14 @@ Route::get('send-article', [ArticleController::class, 'sendArticle']);
 Route::middleware(['auth', 'can:admin-only'])->group(function () {
     Route::get('/optimize', function () {
         Artisan::call('optimize:clear');
-        \Illuminate\Support\Facades\Artisan::call('config:cache');
-        \Illuminate\Support\Facades\Artisan::call('route:cache');
-        \Illuminate\Support\Facades\Artisan::call('view:cache');
+        Artisan::call('config:cache');
+        Artisan::call('route:cache');
+        Artisan::call('view:cache');
         return "Project Optimized!";
     })->name('system.optimize');
 
     Route::get('/storage-link', function () {
-        \Illuminate\Support\Facades\Artisan::call('storage:link');
+        Artisan::call('storage:link');
         return "Storage Link Created!";
     })->name('system.storage-link');
 });

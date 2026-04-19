@@ -73,8 +73,8 @@ class ProfileManager extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'title' => 'Saved!',
-            'message' => 'Profile image uploaded.'
+            'title' => 'Updated!',
+            'message' => 'Your profile picture has been updated.'
         ]);
     }
 
@@ -100,7 +100,7 @@ class ProfileManager extends Component
         $this->dispatch('show-toast', [
             'type' => 'success',
             'title' => 'Saved!',
-            'message' => 'Profile details updated.'
+            'message' => 'Your profile has been saved.'
         ]);
     }
 
@@ -120,8 +120,8 @@ class ProfileManager extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'title' => 'Saved!',
-            'message' => 'Password updated successfully.'
+            'title' => 'Success!',
+            'message' => 'Your password has been changed.'
         ]);
     }
 

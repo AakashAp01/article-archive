@@ -59,7 +59,7 @@ class SettingsManager extends Component
         if ($setting) {
             $setting->update(['value' => $value]);
             $this->clearCache($setting->group, $setting->key);
-            $this->dispatch('show-toast', ['type' => 'success', 'title' => 'Saved', 'message' => 'Configuration synced.']);
+            $this->dispatch('show-toast', ['type' => 'success', 'title' => 'Saved!', 'message' => 'Settings saved successfully.']);
         }
     }
 
@@ -72,7 +72,7 @@ class SettingsManager extends Component
         $this->validate(['newGroupName' => 'required|alpha_dash']);
 
         if (Setting::where('group', $this->newGroupName)->exists()) {
-            $this->addError('newGroupName', 'This module already exists.');
+            $this->addError('newGroupName', 'This section already exists.');
             return;
         }
         
@@ -87,7 +87,7 @@ class SettingsManager extends Component
         $this->loadSettings(); 
         $this->closeAddGroupModal();
         
-        $this->dispatch('show-toast', ['type' => 'success', 'title' => 'Saved!', 'message' => 'Configuration module created.']);
+        $this->dispatch('show-toast', ['type' => 'success', 'title' => 'Saved!', 'message' => 'Settings section created.']);
     }
 
     public function openEditGroupModal() 
@@ -105,7 +105,7 @@ class SettingsManager extends Component
         if ($this->editingGroupName !== $this->activeGroup) {
             Setting::where('group', $this->activeGroup)->update(['group' => $this->editingGroupName]);
             $this->activeGroup = $this->editingGroupName;
-            $this->dispatch('show-toast', ['type' => 'success', 'title' => 'Saved!', 'message' => 'Module updated.']);
+            $this->dispatch('show-toast', ['type' => 'success', 'title' => 'Saved!', 'message' => 'Section updated.']);
         }
 
         $this->loadSettings();
@@ -119,7 +119,7 @@ class SettingsManager extends Component
     {
         Setting::where('group', $this->activeGroup)->delete();
         
-        $this->dispatch('show-toast', ['type' => 'error', 'title' => 'Deleted!', 'message' => 'Module deleted.']);
+        $this->dispatch('show-toast', ['type' => 'error', 'title' => 'Deleted!', 'message' => 'Section deleted.']);
         
 
         $this->activeGroup = Setting::value('group') ?? 'site';
@@ -141,7 +141,7 @@ class SettingsManager extends Component
         $exists = Setting::where('group', $this->activeGroup)->where('key', $this->newKey)->exists();
 
         if($exists) {
-            $this->addError('newKey', 'Variable already exists.');
+            $this->addError('newKey', 'This setting already exists.');
             return;
         }
 
@@ -153,7 +153,7 @@ class SettingsManager extends Component
 
         $this->loadSettings();
         $this->closeAddKeyModal();
-        $this->dispatch('show-toast', ['type' => 'success', 'title' => 'Saved!', 'message' => 'Variable stored.']);
+        $this->dispatch('show-toast', ['type' => 'success', 'title' => 'Saved!', 'message' => 'Setting saved.']);
     }
 
     // --- DELETION ---
@@ -169,7 +169,7 @@ class SettingsManager extends Component
             
             $this->loadSettings();
             
-            $this->dispatch('show-toast', ['type' => 'info', 'title' => 'Removed', 'message' => 'Variable deleted.']);
+            $this->dispatch('show-toast', ['type' => 'info', 'title' => 'Removed', 'message' => 'Setting removed.']);
         }
         $this->closeDeleteModal();
     }

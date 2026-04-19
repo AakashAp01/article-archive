@@ -68,8 +68,8 @@ class UserManager extends Component
         if ($user->trashed()) {
             $this->dispatch('show-toast', [
                 'type' => 'error',
-                'title' => 'Saved!',
-                'message' => 'Cannot login as a terminated user.'
+                'title' => 'Error',
+                'message' => 'This account has been deleted.'
             ]);
             return;
         }
@@ -117,7 +117,7 @@ class UserManager extends Component
         $this->dispatch('show-toast', [
             'type' => 'success',
             'title' => 'Saved!',
-            'message' => $this->userId ? 'User Profile Updated' : 'New User Created'
+            'message' => $this->userId ? 'User profile saved.' : 'User added successfully.'
         ]);
 
         $this->closeModal();
@@ -128,7 +128,7 @@ class UserManager extends Component
         $user = User::withTrashed()->findOrFail($id);
 
         if ($user->trashed()) {
-            $this->dispatch('show-toast', ['type' => 'error', 'title' => 'Saved!', 'message' => 'Cannot edit terminated records.']);
+            $this->dispatch('show-toast', ['type' => 'error', 'title' => 'Error', 'message' => 'This record has been deleted and cannot be edited.']);
             return;
         }
 
@@ -162,7 +162,11 @@ class UserManager extends Component
             $msg = 'User Deleted Successfully';
         }
 
-        $this->dispatch('show-toast', ['type' => 'success', 'title' => 'Saved!', 'message' => $msg]);
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'title' => 'Removed',
+            'message' => $msg === 'Record Permanently Removed' ? 'User deleted forever.' : 'User removed successfully.'
+        ]);
         $this->closeModal();
     }
 
@@ -177,10 +181,10 @@ class UserManager extends Component
         $user->status = $user->status == 1 ? 0 : 1;
         $user->save();
 
-        $msg = $user->status == 1 ? 'User Access Granted' : 'User Access Blocked';
+        $msg = $user->status == 1 ? 'User access enabled.' : 'User access disabled.';
         $this->dispatch('show-toast', [
             'type' => $user->status == 1 ? 'success' : 'warning',
-            'title' => 'Access Control',
+            'title' => 'Access',
             'message' => $msg
         ]);
     }
@@ -203,16 +207,8 @@ class UserManager extends Component
 
         if ($user->trashed()) return;
 
-        if ($user->email_verified_at) {
-            $user->email_verified_at = null;
-            $msg = 'Verification Revoked';
-        } else {
-            $user->email_verified_at = now();
-            $msg = 'Verification Granted';
-        }
-
-        $user->save();
-        $this->dispatch('show-toast', ['type' => 'success', 'title' => 'Saved!', 'message' => $msg]);
+        $msg = $user->email_verified_at ? 'Email verified successfully.' : 'Email verification removed.';
+        $this->dispatch('show-toast', ['type' => 'success', 'title' => 'Updated!', 'message' => $msg]);
     }
 
 
@@ -224,8 +220,8 @@ class UserManager extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'title' => 'Saved!',
-            'message' => 'User account has been fully restored.'
+            'title' => 'Restored!',
+            'message' => 'The user account has been restored.'
         ]);
     }
 }

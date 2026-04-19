@@ -43,7 +43,7 @@ class ArticleInteractions extends Component
             $msg = 'Article saved successfully.';
         }
 
-        $this->dispatch('trigger-toast', type: 'success', title: 'Article Updated', message: $msg);
+        $this->dispatch('trigger-toast', type: 'success', title: 'Saved!', message: $msg);
     }
 
     public function toggleLike()
@@ -71,9 +71,9 @@ class ArticleInteractions extends Component
                 'user_id' => Auth::id(),
                 'reason' => $this->reportReason,
             ]);
-            $this->dispatch('trigger-toast', type: 'success', title: 'Report Submitted', message: 'We will review this shortly.');
+            $this->dispatch('trigger-toast', type: 'success', title: 'Sent', message: "Thank you. We'll look into this soon.");
         } else {
-            $this->dispatch('trigger-toast', type: 'warning', title: 'Already Reported', message: 'You have already reported this article.');
+            $this->dispatch('trigger-toast', type: 'warning', title: 'Wait', message: "You've already reported this.");
         }
 
         $this->reset('reportReason');
@@ -92,7 +92,7 @@ class ArticleInteractions extends Component
         ]);
 
         $this->body = '';
-        $this->dispatch('trigger-toast', type: 'success', title: 'Saved!', message: 'Comment posted.');
+        $this->dispatch('trigger-toast', type: 'success', title: 'Posted!', message: 'Your comment is now live.');
     }
 
     public function setReplyingTo($commentId)
@@ -120,7 +120,7 @@ class ArticleInteractions extends Component
 
         $this->replyingTo = null;
         $this->replyBody = '';
-        $this->dispatch('trigger-toast', type: 'success', title: 'Saved!', message: 'Reply posted.');
+        $this->dispatch('trigger-toast', type: 'success', title: 'Posted!', message: 'Your reply is now live.');
     }
 
     public function render()

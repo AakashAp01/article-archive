@@ -30,7 +30,7 @@ class NewsletterController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Successfully subscribed to the newsletter.'
+            'message' => "You've been subscribed!"
         ]);
     }
 
@@ -80,7 +80,7 @@ class NewsletterController extends Controller
             ]);
 
             return view('newsletter.success', [
-                'message' => 'You have been successfully unsubscribed.'
+                'message' => "You've been unsubscribed."
             ]);
 
         } catch (\Throwable $e) {

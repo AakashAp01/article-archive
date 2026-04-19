@@ -9,7 +9,7 @@
     {{-- Clickable Cards --}}
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-10">
 
-        <x-stat-card title="Personnel" :count="$stats['users']" :href="route('users.index')" color="blue" progress="70">
+        <x-stat-card title="Users" :count="$stats['users']" :href="route('users.index')" color="blue" progress="70">
             <x-slot:icon>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2">
@@ -66,7 +66,7 @@
     {{-- GRAPH SECTION --}}
     <div class="bg-white/5 border border-white/10 p-6 rounded-sm relative mb-12">
         <h3 class="text-xs text-white uppercase tracking-widest mb-6 border-b border-white/10 pb-4">
-            Activity Log (Last 6 Months)
+            Activity Overview (Last 6 Months)
         </h3>
         <div class="relative h-[300px] w-full">
             <canvas id="dashboardChart"></canvas>
@@ -82,9 +82,8 @@
     <div class="bg-white/5 border border-white/10 p-6 rounded-sm relative">
         <h3
             class="text-xs text-white uppercase tracking-widest mb-6 border-b border-white/10 pb-4 flex justify-between items-center">
-            <span>Top 10 High-Engagement Articles</span>
-            <a href="{{ route('article.index') }}" class="text-[10px] text-accent hover:underline">View Full
-                Database</a>
+            <span>Popular Articles</span>
+            <a href="{{ route('article.index') }}" class="text-[10px] text-accent hover:underline">View All Articles</a>
         </h3>
 
         <div class="overflow-x-auto" role="table" aria-label="Top Engagement Articles">
@@ -94,8 +93,8 @@
                         <th class="pb-3 pl-2" role="columnheader">#</th>
                         <th class="pb-3" role="columnheader">Title</th>
                         <th class="pb-3 text-center" role="columnheader">Category</th>
-                        <th class="pb-3 text-center" role="columnheader">Engagement Analytics</th>
-                        <th class="pb-3 text-right pr-2" role="columnheader">Controls</th>
+                        <th class="pb-3 text-center" role="columnheader">Stats</th>
+                        <th class="pb-3 text-right pr-2" role="columnheader">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="text-sm">
@@ -199,7 +198,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="py-20 text-center text-[#444] font-display text-[10px] uppercase tracking-[2px]">No archives detected in current grid cycle.</td>
+                            <td colspan="5" class="py-20 text-center text-[#444] font-display text-[10px] uppercase tracking-[2px]">No articles found in this period.</td>
                         </tr>
                     @endforelse
                 </tbody>

@@ -142,7 +142,7 @@ class ArticleManager extends Component
         $this->dispatch('show-toast', [
             'type' => 'success', 
             'title' => 'Saved!', 
-            'message' => 'Article Saved Successfully.'
+            'message' => 'Article saved successfully.'
         ]);
 
         // Optional: Redirect

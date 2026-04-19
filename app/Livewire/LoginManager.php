@@ -81,14 +81,14 @@ class LoginManager extends Component
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
             if (Auth::user()->status == 0) {
                 Auth::logout();
-                $this->addError('email', 'Your account has been blocked. Please contact support.');
+                $this->addError('email', 'This account is disabled. Please reach out to us.');
                 return;
             }
             session()->regenerate();
             return redirect()->intended(route('dashboard'));
         }
 
-        $this->addError('email', 'Invalid Credentials.');
+        $this->addError('email', 'Incorrect email or password.');
     }
 
     // 1. STEP ONE: Validate Input, Generate OTP, Send Email
@@ -117,7 +117,7 @@ class LoginManager extends Component
 
         } catch (\Exception $e) {
             Log::error('OTP Email Failed: ' . $e->getMessage());
-            $this->addError('email', 'Failed to send verification code. Please try again.');
+            $this->addError('email', "We couldn't send the code. Please try again shortly.");
         }
     }
 
@@ -131,13 +131,13 @@ class LoginManager extends Component
         $data = Session::get('register_data');
 
         if (!$data || now()->greaterThan($data['expires_at'])) {
-            $this->addError('otp', 'Session expired. Please register again.');
+            $this->addError('otp', 'Session timed out. Please start over.');
             $this->isOtpMode = false;
             return;
         }
 
         if ($data['otp'] != $this->otp) {
-            $this->addError('otp', 'Invalid verification code.');
+            $this->addError('otp', 'Incorrect verification code.');
             return;
         }
 
@@ -163,7 +163,7 @@ class LoginManager extends Component
         } catch (\Throwable $e) {
             DB::rollBack();
             Log::error('Registration Error: ' . $e->getMessage());
-            $this->addError('otp', 'System Error. Registration failed.');
+            $this->addError('otp', 'Something went wrong. Please try again.');
         }
     }
 

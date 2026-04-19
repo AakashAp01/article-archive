@@ -84,8 +84,8 @@ class CategoryManager extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success', 
-            'title' => 'Saved!', 
-            'message' => "Category {$actionType} Successfully"
+            'title' => 'Success!', 
+            'message' => "Category saved successfully."
         ]);
 
         $this->closeModal();
@@ -111,8 +111,8 @@ class CategoryManager extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success', 
-            'title' => 'Saved!', 
-            'message' => 'Category visibility changed.'
+            'title' => 'Updated!', 
+            'message' => 'Category visibility updated.'
         ]);
     }
 
@@ -130,7 +130,7 @@ class CategoryManager extends Component
         $this->dispatch('show-toast', [
             'type' => 'success', 
             'title' => 'Deleted', 
-            'message' => 'Category removed from taxonomy.'
+            'message' => 'Category deleted successfully.'
         ]);
         
         $this->closeModal();

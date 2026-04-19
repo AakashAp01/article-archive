@@ -73,7 +73,7 @@ class NewsletterManager extends Component
         $this->dispatch('show-toast', [
             'type' => 'success', 
             'title' => 'Saved!', 
-            'message' => $msg
+            'message' => $this->newsletterId ? 'Subscriber saved.' : 'Subscriber added.'
         ]);
 
         $this->closeModal();
@@ -99,8 +99,8 @@ class NewsletterManager extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success', 
-            'title' => 'Status Sync', 
-            'message' => $statusMsg
+            'title' => 'Access', 
+            'message' => $sub->is_active ? 'Subscription enabled.' : 'Subscription disabled.'
         ]);
     }
 
@@ -116,8 +116,8 @@ class NewsletterManager extends Component
         
         $this->dispatch('show-toast', [
             'type' => 'success', 
-            'title' => 'Terminated', 
-            'message' => 'Subscriber removed from database.'
+            'title' => 'Deleted', 
+            'message' => 'Subscriber removed successfully.'
         ]);
         
         $this->closeModal();

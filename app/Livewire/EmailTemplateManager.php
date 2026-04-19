@@ -86,7 +86,7 @@ class EmailTemplateManager extends Component
         $this->dispatch('show-toast', [
             'type' => 'success',
             'title' => 'Saved!',
-            'message' => 'Email Template saved successfully.'
+            'message' => 'Email template saved successfully.'
         ]);
 
         $this->dispatch('reload-page');
@@ -103,7 +103,7 @@ class EmailTemplateManager extends Component
         if ($this->deleteId) {
             $template = EmailTemplate::find($this->deleteId);
             if ($template) $template->delete();
-            $this->dispatch('show-toast', ['type' => 'error', 'title' => 'Deleted!', 'message' => 'Template deleted permanently.']);
+            $this->dispatch('show-toast', ['type' => 'error', 'title' => 'Deleted!', 'message' => 'Template deleted successfully.']);
         }
         $this->isDeleteModalOpen = false;
     }
@@ -145,15 +145,15 @@ class EmailTemplateManager extends Component
 
             $this->dispatch('show-toast', [
                 'type' => 'success',
-                'title' => 'Test Successful',
-                'message' => 'Test email successfully send to ' . $this->testEmail
+                'title' => 'Email Sent',
+                'message' => 'Test email sent to ' . $this->testEmail
             ]);
 
             $this->closeTestModal();
         } catch (\Exception $e) {
             $this->dispatch('show-toast', [
                 'type' => 'error',
-                'title' => 'Transmission Failed',
+                'title' => 'Error',
                 'message' => $e->getMessage()
             ]);
         }

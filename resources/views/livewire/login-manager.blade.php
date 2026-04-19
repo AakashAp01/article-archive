@@ -9,25 +9,25 @@
             <div
                 class="inline-flex items-center gap-2 text-accent border border-accent/30 px-3 py-1 rounded-full text-sm mb-4 bg-accent/5 backdrop-blur-sm">
                 <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-                SECURE GATEWAY
+                ACCOUNT LOGIN
             </div>
 
             <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight mb-2">
                 @if ($isForgotPassword)
-                    Credential Recovery
+                    Reset Password
                 @elseif ($isLoginMode)
-                    Identify Yourself
+                    Welcome Back
                 @else
-                    New User Uplink
+                    Create Account
                 @endif
             </h1>
             <p class="text-sm text-[#666] px-4">
                 @if ($isForgotPassword)
-                    Target email for neural reset link.
+                    Enter your email to receive a password reset link.
                 @elseif ($isLoginMode)
-                    Enter credentials to access the grid.
+                    Please enter your credentials to log in.
                 @else
-                    Establish a new neural identity.
+                    Join our community and start sharing.
                 @endif
             </p>
         </div>
@@ -135,13 +135,13 @@
                         <span wire:loading.remove wire:target="submit"
                             class="font-display uppercase tracking-widest text-xs font-bold transition-colors">
                             @if ($isForgotPassword)
-                                Initialize Reset
+                                Send Reset Link
                             @elseif ($isOtpMode)
-                                Verify    
+                                Verify Code    
                             @elseif ($isLoginMode)
-                                Login
+                                Log In
                             @else
-                                Sign Up
+                                Create Account
                             @endif
                         </span>
                         <span wire:loading wire:target="submit"
@@ -159,7 +159,7 @@
                 <div class="w-full border-t border-white/10"></div>
             </div>
             <span class="relative bg-[#0a0a0f] px-4 text-sm text-[#666] uppercase tracking-widest">
-                {{ $isForgotPassword ? 'Or Return To' : 'Or Authenticate With' }}
+                {{ $isForgotPassword ? 'Or Return To' : 'Or Continue With' }}
             </span>
         </div>
 
@@ -190,7 +190,7 @@
             @if ($isForgotPassword)
                 <button wire:click="cancelForgotPassword"
                     class="text-xs text-[#666] hover:text-accent transition-colors font-mono uppercase tracking-wider">
-                    <span class="underline decoration-accent/50 underline-offset-4">Abort Reset Sequence</span>
+                    <span class="underline decoration-accent/50 underline-offset-4">Back to Login</span>
                 </button>
             @else
                 <button wire:click="toggleMode" wire:loading.attr="disabled"
@@ -198,8 +198,7 @@
                     @if ($isLoginMode)
                         New here? <span class="underline decoration-accent/50 underline-offset-4">Create Account</span>
                     @else
-                        Already have an account? <span class="underline decoration-accent/50 underline-offset-4">Access
-                            Login</span>
+                        Already have an account? <span class="underline decoration-accent/50 underline-offset-4">Log In</span>
                     @endif
                 </button>
             @endif

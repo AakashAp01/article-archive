@@ -29,7 +29,6 @@
             @auth
                 <button wire:click="setReplyingTo({{ $comment->id }})"
                     class="mt-3 text-xs  text-[#444] hover:text-accent-dynamic transition-colors flex items-center gap-1 font-bold">
-                    
                     Reply
                 </button>
             @endauth

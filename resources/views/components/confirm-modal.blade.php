@@ -28,12 +28,12 @@
                     </svg>
                 </div>
 
-                <h3 class="text-xl text-white font-light mb-2 tracking-tight">Confirm Deletion</h3>
-                <p class="text-[10px] text-red-400 font-display uppercase tracking-widest mb-6">Action Cannot Be Undone
+                <h3 class="text-xl text-white font-light mb-2 tracking-tight">Are you sure?</h3>
+                <p class="text-[10px] text-red-400 font-display uppercase tracking-widest mb-6">This action cannot be undone
                 </p>
 
                 <p class="text-sm text-[#888] mb-8 leading-relaxed font-light">
-                    You are about to permanently remove this entry from the grid.
+                    You are about to permanently delete this item.
                 </p>
 
                 <div class="flex gap-4">
@@ -44,7 +44,7 @@
 
                     <button type="button" onclick="confirmAction()"
                         class="flex-1 py-3 bg-red-500/10 border border-red-500/50 text-red-400 text-xs font-display uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all ">
-                        Proceed
+                        Delete
                     </button>
                 </div>
             </div>
@@ -91,7 +91,7 @@
         if (formToSubmit) {
             // Optional: Change button text to indicate processing
             const btn = document.querySelector('#confirmContent button:last-child');
-            btn.innerText = 'DELETING...';
+            btn.innerText = 'Deleting...';
 
             formToSubmit.submit();
         }

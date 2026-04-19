@@ -74,7 +74,11 @@
 @endpush
 
 <div>
-    <main class="max-w-7xl mx-auto px-6 mt-10 pb-20">
+    <main class="max-w-7xl mx-auto mt-32 px-6 pb-20 relative">
+        <x-page-header 
+            title="Editor" 
+            subtitle="Write and edit your blog posts" 
+        />
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
             {{-- LEFT COLUMN: Content --}}
@@ -112,8 +116,7 @@
 
                 {{-- 1. Thumbnail Upload --}}
                 <div class="bg-white/5 border border-white/10 p-6 rounded-sm">
-                    <h3 class="text-xs text-accent uppercase tracking-widest mb-4 border-b border-white/10 pb-2">Visual
-                        Data</h3>
+                    <h3 class="text-xs text-accent uppercase tracking-widest mb-4 border-b border-white/10 pb-2">Cover Image</h3>
 
                     <div class="space-y-4">
                         {{-- Preview Area --}}
@@ -132,7 +135,7 @@
                                             d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
                                         </path>
                                     </svg>
-                                    <span class="text-[10px] uppercase">No Signal</span>
+                                    <span class="text-[10px] uppercase">No Image Selected</span>
                                 </div>
                             @endif
 
@@ -158,8 +161,7 @@
 
                 {{-- 2. SEO Meta Data --}}
                 <div class="bg-white/5 border border-white/10 p-6 rounded-sm">
-                    <h3 class="text-xs text-accent uppercase tracking-widest mb-4 border-b border-white/10 pb-2">SEO
-                        Protocols</h3>
+                    <h3 class="text-xs text-accent uppercase tracking-widest mb-4 border-b border-white/10 pb-2">Search Settings (SEO)</h3>
 
                     <div class="space-y-4">
                         <div>
@@ -179,8 +181,7 @@
 
                 {{-- 3. Grid Position --}}
                 <div class="bg-white/5 border border-white/10 p-6 rounded-sm">
-                    <h3 class="text-xs text-accent uppercase tracking-widest mb-4 border-b border-white/10 pb-2">Grid
-                        Position</h3>
+                    <h3 class="text-xs text-accent uppercase tracking-widest mb-4 border-b border-white/10 pb-2">Map Position</h3>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="text-[10px] uppercase text-[#666] block mb-1">X Axis</label>
@@ -254,18 +255,18 @@
                     <path d="m15 18-6-6 6-6" />
                 </svg>
             </div>
-            <span class="text-xs uppercase tracking-widest group-hover:text-accent transition-colors">Abort Entry</span>
+            <span class="text-xs uppercase tracking-widest group-hover:text-accent transition-colors">Cancel</span>
         </a>
 
         <div class="hidden md:flex items-center gap-2">
             <span class="w-1.5 h-1.5 bg-accent rounded-full animate-pulse"></span>
-            <span class="text-[10px] text-accent uppercase tracking-[0.2em]">Live Editor Mode</span>
+            <span class="text-[10px] text-accent uppercase tracking-[0.2em]">Live Editor Enabled</span>
         </div>
 
         {{-- Publish Button triggers Livewire `store` --}}
         <button wire:click="store" wire:loading.attr="disabled"
             class="group bg-accent text-sm hover:bg-[#00cc6a] text-black px-6 py-2 flex items-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-            <span wire:loading.remove class="text-xs font-bold uppercase tracking-wider">Publish Grid</span>
+            <span wire:loading.remove class="text-xs font-bold uppercase tracking-wider">Publish Post</span>
             <span wire:loading class="text-xs font-bold uppercase tracking-wider">Optimizing...</span>
             <svg wire:loading.remove width="14" height="14" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2">

@@ -10,17 +10,13 @@
     <div class="max-w-4xl mx-auto px-6 relative z-10">
         
         {{-- Header --}}
-        <div class="mb-12 border-b border-white/10 pb-8">
-            <div class="flex items-center gap-3 mb-4 text-[#00ff88]">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <span class=" text-xs uppercase tracking-[0.2em]">Legal Protocol // 001</span>
-            </div>
-            <h1 class="text-4xl md:text-5xl font-light text-white mb-4">Privacy Policy</h1>
-            <p class="text-[#666]  text-xs">LAST UPDATED: {{ date('F d, Y') }}</p>
-        </div>
+        <x-page-header 
+            title="Privacy Policy" 
+            subtitle="How we handle and protect your data" 
+        />
 
         {{-- Content --}}
-        <div class="prose prose-invert prose-lg max-w-none text-[#a0a0a0]">
+        <article class="prose prose-invert prose-lg max-w-none text-[#a0a0a0]">
             <p>
                 At <strong>AkashAp.dev</strong> ("we", "our", or "us"), we are committed to protecting your personal data and your right to privacy. This policy outlines our protocols regarding the collection, use, and disclosure of your information when you use our digital services.
             </p>

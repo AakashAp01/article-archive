@@ -1,84 +1,59 @@
 <main class="max-w-7xl mx-auto mt-32 px-6 pb-20 relative ">
 
     {{-- Header Section --}}
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-white/10 pb-6">
-        <div>
-            <h1 class="text-2xl text-white font-semibold mb-2">Articles
-                <p class="text-xs text-[#666] uppercase tracking-widest">Content Grid Management</p>
-        </div>
+    <x-page-header 
+        title="Articles" 
+        subtitle="Manage your blog posts and published content" 
+    />
 
-        <div class="flex flex-col xl:flex-row items-center gap-4 w-full md:w-auto">
-
-            {{-- FILTER GROUP --}}
-            <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
-
-                {{-- Category Filter --}}
-                <div class="relative group min-w-[150px]">
-                    <select wire:model.live="categoryFilter"
-                        class="w-full bg-black/20 border border-white/10 px-4 py-3 text-xs text-white focus:outline-none focus:border-accent transition-all font-display uppercase tracking-wider appearance-none cursor-pointer hover:bg-black/40">
-                        <option value="" class="bg-black text-white">All Categories</option>
-                        @foreach ($categories as $cat)
-                            <option value="{{ $cat->id }}" class="bg-black text-white">{{ $cat->name }}</option>
-                        @endforeach
-                    </select>
-                    {{-- Dropdown Icon --}}
-                    <div
-                        class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/30 group-hover:text-accent transition-colors">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M6 9l6 6 6-6" />
-                        </svg>
-                    </div>
-                </div>
-
-                {{-- Status Filter --}}
-                <div class="relative group min-w-[150px]">
-                    <select wire:model.live="statusFilter"
-                        class="w-full bg-black/20 border border-white/10 px-4 py-3 text-xs text-white focus:outline-none focus:border-accent transition-all font-display uppercase tracking-wider appearance-none cursor-pointer hover:bg-black/40">
-                        <option value="" class="bg-black text-white">All Statuses</option>
-                        <option value="published" class="bg-black text-white">Published (Live)</option>
-                        <option value="draft" class="bg-black text-white">Draft (Offline)</option>
-                    </select>
-                    <div
-                        class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/30 group-hover:text-accent transition-colors">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M6 9l6 6 6-6" />
-                        </svg>
-                    </div>
-                </div>
-
-                {{-- Search Bar --}}
-                <div class="relative w-full md:w-64 group">
-                    <input wire:model.live.debounce.300ms="search" type="text"
-                        class="w-full bg-black/20 border border-white/10 px-10 py-3 text-xs text-white focus:outline-none focus:border-accent transition-all placeholder-white/20 font-display uppercase tracking-wider"
-                        placeholder="SEARCH DATABASE...">
-                    <div
-                        class="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-accent transition-colors">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                    </div>
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
+        
+        <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+            {{-- Category Filter --}}
+            <div class="relative group min-w-[150px]">
+                <select wire:model.live="categoryFilter"
+                    class="w-full appearance-none bg-black/20 border border-white/10 px-4 py-3 text-xs text-white focus:outline-none focus:border-accent transition-all font-display uppercase tracking-wider cursor-pointer hover:bg-black/40">
+                    <option value="" class="bg-black text-white">All Categories</option>
+                    @foreach ($categories as $cat)
+                        <option value="{{ $cat->id }}" class="bg-black text-white">{{ $cat->name }}</option>
+                    @endforeach
+                </select>
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/30 group-hover:text-accent transition-colors">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
                 </div>
             </div>
 
-            {{-- Link to Create Page --}}
-            <a href="{{ route('article.create') }}"
-                class="w-full md:w-auto group flex items-center justify-center gap-3 bg-white/5 border border-white/20 hover:border-accent px-6 py-3 transition-all hover:bg-accent/10 cursor-pointer">
+            {{-- Status Filter --}}
+            <div class="relative group min-w-[150px]">
+                <select wire:model.live="statusFilter"
+                    class="w-full appearance-none bg-black/20 border border-white/10 px-4 py-3 text-xs text-white focus:outline-none focus:border-accent transition-all font-display uppercase tracking-wider cursor-pointer hover:bg-black/40">
+                    <option value="" class="bg-black text-white">All Statuses</option>
+                    <option value="published" class="bg-black text-white">Published</option>
+                    <option value="draft" class="bg-black text-white">Draft</option>
+                </select>
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/30 group-hover:text-accent transition-colors">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
+                </div>
+            </div>
 
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" class="text-white group-hover:text-accent transition-colors">
-                    <path d="M12 5v14M5 12h14" />
-                </svg>
-
-                <span class="text-xs text-white uppercase tracking-widest group-hover:text-accent font-display">
-                    Compose New
-                </span>
-            </a>
-
+            {{-- Search Bar --}}
+            <div class="relative w-full md:w-64 group">
+                <input wire:model.live.debounce.300ms="search" type="text"
+                    class="w-full bg-black/20 border border-white/10 px-10 py-3 text-xs text-white focus:outline-none focus:border-accent transition-all placeholder-white/20 font-display uppercase tracking-wider"
+                    placeholder="SEARCH ARTICLES...">
+                <div class="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-accent transition-colors">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+            </div>
         </div>
+
+        {{-- Initialize Button --}}
+        <x-button variant="accent-outline" class="w-full md:w-auto">
+            <a href="{{ route('article.create') }}" class="w-full h-full flex items-center justify-center gap-3">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" /></svg>
+                Compose New
+            </a>
+        </x-button>
     </div>
 
     {{-- Table --}}
@@ -270,43 +245,33 @@
 
     {{-- Delete Modal --}}
     @if ($isDeleteModalOpen)
-        <div class="fixed inset-0 z-50 flex items-center justify-center">
-            <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" wire:click="$set('isDeleteModalOpen', false)">
+        <x-modal id="deleteArticleModal" 
+            title="Confirm Purge" 
+            subtitle="Permanently wipe this entry from the database?"
+            variant="danger"
+            wire:click="$set('isDeleteModalOpen', false)"
+            class="text-center">
+            
+            <svg class="mx-auto w-12 h-12 text-red-500 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            
+            <div class="flex gap-3">
+                <x-button wire:click="$set('isDeleteModalOpen', false)" variant="outline" class="flex-1">Abort</x-button>
+                <x-button wire:click="delete" variant="danger" class="flex-1">Confirm</x-button>
             </div>
-            <div
-                class="relative w-full max-w-sm p-6 bg-[#0a0a0a] border border-red-500/30 shadow-[0_0_30px_rgba(255,0,0,0.1)] z-10 text-center">
-                <svg class="mx-auto w-12 h-12 text-red-500 mb-4" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1">
-                    <path
-                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <h3 class="text-lg text-white font-light mb-2">Confirm Delete!</h3>
-                <p class="text-xs text-[#888] font-mono mb-6">Permanently delete this entry?</p>
-                <div class="flex gap-3">
-                    <button wire:click="$set('isDeleteModalOpen', false)"
-                        class="flex-1 bg-white/5 border border-white/10 text-white py-3 text-[10px] font-bold uppercase tracking-widest hover:bg-white/10">Cancel</button>
-                    <button wire:click="delete"
-                        class="flex-1 bg-red-600/20 border border-red-500/50 text-red-500 py-3 text-[10px] font-bold uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all">Confirm</button>
-                </div>
-            </div>
-        </div>
+        </x-modal>
     @endif
 </main>
 
 @script
 <script>
     Livewire.on('show-toast', (data) => {
-
         const payload = Array.isArray(data) ? data[0] : data;
-
         if (window.showToast) {
             window.showToast(
                 payload.type, 
                 payload.title, 
                 payload.message
             );
-        } else {
-            console.error('window.showToast function is not loaded.');
         }
     });
 </script>

@@ -47,7 +47,7 @@
                         </svg>
                     </button>
                 </div>
-                <p class="mt-3 text-[13px] text-[#555] font-display">* No spam. Unsubscribe command always available.
+                <p class="mt-3 text-[13px] text-[#555] font-display">* No spam. Unsubscribe at any time.
                 </p>
             </form>
         </div>
@@ -82,7 +82,7 @@
             </div>
 
             <div>
-                <h4 class="font-display text-sm font-semibold text-white uppercase tracking-widest mb-6">Directory</h4>
+                <h4 class="font-display text-sm font-semibold text-white uppercase tracking-widest mb-6">Explore</h4>
                 <ul class="space-y-3 text-sm font-display">
                     <li><a href="/"
                             class="text-text-muted hover:text-accent transition-all duration-300  block">Home</a></li>
@@ -99,7 +99,7 @@
             </div>
 
             <div>
-                <h4 class="font-display text-sm font-semibold text-white uppercase tracking-widest mb-6">System Core
+                <h4 class="font-display text-sm font-semibold text-white uppercase tracking-widest mb-6">Built With
                 </h4>
                 <ul class="space-y-3 text-sm font-display">
 
@@ -132,7 +132,7 @@
 
 
             <div>
-                <h4 class="font-display text-sm font-semibold text-white uppercase tracking-widest mb-6">Protocols</h4>
+                <h4 class="font-display text-sm font-semibold text-white uppercase tracking-widest mb-6">Legal</h4>
                 <ul class="space-y-3 text-sm font-display">
                     <li><a href="{{ route('privacy') }}"
                             class="text-text-muted hover:text-accent transition-colors">Privacy Policy</a></li>
@@ -144,7 +144,7 @@
 
         <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="text-[10px] text-[#555] font-display uppercase tracking-wider">
-                &copy; {{ date('Y') }} AkashAp Systems. All Rights Reserved.
+                &copy; {{ date('Y') }} AkashAp. All Rights Reserved.
             </div>
             <div class="flex items-center gap-3 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
                 <div class="relative flex h-2 w-2">
@@ -152,7 +152,7 @@
                         class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
                 </div>
-                <span class="text-[10px] font-bold text-[#a0a0a0] font-display uppercase">System Operational</span>
+                <span class="text-[10px] font-bold text-[#a0a0a0] font-display uppercase">Live & Active</span>
             </div>
         </div>
     </div>

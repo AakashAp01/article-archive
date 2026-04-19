@@ -39,7 +39,7 @@
                     stroke-width="2" class="text-[#666] group-hover:text-white transition-colors">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
-                <span class="font-display text-xs uppercase tracking-wider text-gray-300">Discuss</span>
+                <span class="font-display text-xs uppercase tracking-wider text-gray-300">Comments</span>
                 @if ($commentsCount > 0)
                     <span class="flex items-center justify-center h-4 px-1.5  bg-white/10 text-[9px] font-bold text-white group-hover:bg-white/20 transition-colors">
                         {{ $commentsCount }}
@@ -113,9 +113,7 @@
                 <h3 class="text-xl text-white font-light mb-2 tracking-tight">Report Content</h3>
 
                 <div class="mb-8">
-                    <p class="text-sm text-[#888] font-light mb-4 leading-relaxed">
-                        Identify the interference pattern detected in this article.
-                    </p>
+                        Please let us know why you are reporting this article.
 
                     {{-- Styled Select Input --}}
                     <div class="relative group text-left">
@@ -153,7 +151,7 @@
 
                     <button type="button" wire:click="report" wire:loading.attr="disabled"
                         class="flex-1 py-3 bg-yellow-500/10 border border-yellow-500/50 text-yellow-500 text-xs font-[Courier] uppercase tracking-widest hover:bg-yellow-500 hover:text-black transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-                        <span wire:loading.remove wire:target="report">Proceed</span>
+                        <span wire:loading.remove wire:target="report">Report</span>
                         <span wire:loading wire:target="report">Sending...</span>
                     </button>
                 </div>
@@ -198,7 +196,7 @@
                 {{-- We pass 'replyingTo' so the child knows when to open its form --}}
                 <x-comment-item :comment="$comment" :replyingTo="$replyingTo" />
             @empty
-                <p class="text-[#666] italic text-sm text-center">No signals detected yet. Be the first to transmit.
+                <p class="text-[#666] italic text-sm text-center">No comments yet. Be the first to share your thoughts.
                 </p>
             @endforelse
         </div>
@@ -208,7 +206,7 @@
     <script>
         document.addEventListener('livewire:initialized', () => {
             @this.on('article-reported', () => {
-                alert('Article flagged. Administrators will review the content.');
+                alert('Article reported. Our team will review the content.');
             });
         });
 

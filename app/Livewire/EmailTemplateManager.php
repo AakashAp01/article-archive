@@ -159,6 +159,11 @@ class EmailTemplateManager extends Component
         }
     }
 
+    public function toggleStatus($id)
+    {
+        // Removed as column does not exist
+    }
+
     public function cancel()
     {
         $this->showForm = false;

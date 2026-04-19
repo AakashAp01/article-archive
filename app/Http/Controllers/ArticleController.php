@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
@@ -22,6 +23,31 @@ class ArticleController extends Controller
         $nextRead = $recommendedArticles->first();
 
         return view('reader', compact('article', 'recommendedArticles', 'nextRead'));
+    }
+
+    public function sendArticle()
+    {
+        $article = Article::orderBy('date', 'desc')->first();
+
+        if (!$article) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No article found'
+            ]);
+        }
+
+        $response = Http::get('http://localhost:5678/webhook-test/79d1e117-b084-4f9b-9807-5a56ba60c7c7', [
+            'id' => $article->id,
+            'title' => $article->title,
+            'slug' => $article->slug,
+            'content' => $article->content,
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'code' => 400,
+            'sent_to_n8n' => $response->successful()
+        ]);
     }
 
 }

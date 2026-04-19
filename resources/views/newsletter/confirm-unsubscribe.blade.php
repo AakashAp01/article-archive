@@ -16,17 +16,17 @@
         {{-- Content --}}
         <div class="relative z-10 text-center px-6 w-full max-w-lg">
             <div class="font-display text-red-500 text-sm tracking-[0.3em] mb-4 animate-pulse">
-                // TERMINATION_PROTOCOL
+                UNSUBSCRIBE
             </div>
 
             <h1 class="text-5xl md:text-6xl font-light tracking-tighter mb-2 opacity-90">
-                DISCONNECT
+                GOODBYE
             </h1>
 
             <div class="h-px w-24 bg-red-500/50 mx-auto my-8"></div>
 
             <p class="font-display text-[#888] text-sm max-w-md mx-auto leading-relaxed mb-8">
-                You are about to sever your connection to the newsletter frequency. This action cannot be undone.
+                You are about to unsubscribe from our newsletter. We're sorry to see you go!
             </p>
 
             {{-- FORM --}}
@@ -53,12 +53,12 @@
                         </svg>
                         <span
                             class="font-display text-xs uppercase tracking-widest text-red-500 group-hover:text-white">Confirm
-                            Termination</span>
+                            Unsubscribe</span>
                     </button>
 
                     <a href="{{ url('/') }}"
                         class="text-[#444] hover:text-[#888] font-display text-[10px] uppercase tracking-widest transition-colors mt-2">
-                        Abort & Return Home
+                        Cancel & Go Home
                     </a>
                 </div>
             </form>

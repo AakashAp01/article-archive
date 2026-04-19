@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 
-export const useWorldEngine = (viewportRef, worldRef, minimapIndicatorRef, coordRef, activeArticle, setHighlightedId, worldLimit) => {
+export const useWorldEngine = (viewportRef, worldRef, minimapIndicatorRef, coordRef, activeArticle, setActiveArticle, setHighlightedId, worldLimit) => {
   
   const [cameraPosition, setCameraPosition] = useState({ x: 0, y: 0 });
 
@@ -67,7 +67,19 @@ export const useWorldEngine = (viewportRef, worldRef, minimapIndicatorRef, coord
     if (!view) return;
 
     const onMouseDown = (e) => {
-      if (e.target.closest('input, button, .card')) return;
+      // 1. If clicking an input/button/a, allow default behavior
+      if (e.target.closest('input, button, a')) return;
+      
+      // 2. Clear focus from search or other inputs to restore wheel event bubbling
+      if (document.activeElement instanceof HTMLElement) {
+          document.activeElement.blur();
+      }
+
+      // 3. Dismiss active article view if clicking the background
+      if (activeArticle) {
+          setActiveArticle(null);
+      }
+      
       setHighlightedId(null);
       physics.current.isDragging = true;
       physics.current.startX = e.clientX - physics.current.targetX;
@@ -94,10 +106,14 @@ export const useWorldEngine = (viewportRef, worldRef, minimapIndicatorRef, coord
     };
 
     const onWheel = (e) => {
-      if (activeArticle) return;
+      // Only block scroll if a detailed view is actually visible/active in a way that needs it
+      // For now, let's allow scrolling even if activeArticle is set, 
+      // as it might just mean 'highlighted' in this context.
+      // if (activeArticle) return; 
+
       e.preventDefault();
-      const rawX = physics.current.targetX - (e.deltaX * 0.8);
-      const rawY = physics.current.targetY - (e.deltaY * 0.8);
+      const rawX = physics.current.targetX - (e.deltaX * 1.5); // Slightly faster
+      const rawY = physics.current.targetY - (e.deltaY * 1.5);
       
       physics.current.targetX = clamp(rawX, worldLimit);
       physics.current.targetY = clamp(rawY, worldLimit);

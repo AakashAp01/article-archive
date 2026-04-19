@@ -1,54 +1,38 @@
 @extends('layout.error')
-@section('title', '405 Method Not Allowed')
+@section('title', '405 - Method Not Allowed')
 @section('content')
+<div class="bg-bg text-white h-screen flex flex-col items-center justify-center relative overflow-hidden selection:bg-accent selection:text-black">
 
-    <div class="bg-bg text-white h-screen flex flex-col items-center justify-center relative overflow-hidden">
+    {{-- Background Grid & Glow --}}
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
 
-        <div
-            class="absolute inset-0 bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.01)_0px,rgba(255,255,255,0.01)_1px,transparent_1px,transparent_10px)] pointer-events-none">
+    {{-- Content --}}
+    <div class="relative z-10 text-center px-6">
+        <div class="font-display text-accent text-sm tracking-[0.3em] mb-4 animate-pulse">
+            INVALID ACTION
         </div>
+        
+        <h1 class="text-8xl md:text-9xl font-light tracking-tighter mb-2 opacity-90">
+            405
+        </h1>
+        
+        <div class="h-px w-24 bg-accent/50 mx-auto my-8"></div>
 
-        <div class="relative z-10 text-center px-6">
+        <p class="font-display text-[#888] text-sm max-w-md mx-auto leading-relaxed mb-10">
+            The action you attempted is not allowed for this page.
+        </p>
 
-            <div class="mb-6 flex justify-center">
-                <div class="relative">
-                    <div class="absolute -inset-2 bg-white/5 rounded-full blur-md"></div>
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.5" class="text-gray-400 relative z-10">
-                        <path d="m16 16 2.29 2.29a1 1 0 0 0 1.42 0l2.29-2.29" />
-                        <path d="M22 16v-5a5 5 0 0 0-5-5h-4" />
-                        <path d="m8 8-2.29-2.29a1 1 0 0 0-1.42 0L2 8" />
-                        <path d="M2 8v5a5 5 0 0 0 5 5h4" />
-                    </svg>
-                </div>
-            </div>
-
-            <h1 class="text-4xl md:text-5xl font-light text-white mb-2 tracking-tight">
-                Invalid Protocol
-            </h1>
-            <p class="font-display text-xs text-[#666] uppercase tracking-[0.2em] mb-8">
-                ERROR_405 // METHOD_NOT_ALLOWED
-            </p>
-
-            <div class="max-w-md mx-auto bg-white/5 border border-white/10 p-6 rounded-sm mb-8">
-                <p class="text-sm text-[#888] font-display leading-relaxed">
-                    The action you attempted is not compatible with this resource endpoint.
-                    <br><span class="text-[#555] text-xs mt-2 block">(e.g., Attempting GET on a POST route)</span>
-                </p>
-            </div>
-
-            <a href="{{ url('/') }}"
-                class="group inline-flex items-center gap-2 text-white hover:text-accent transition-colors">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    class="group-hover:-translate-x-1 transition-transform">
-                    <path d="m12 19-7-7 7-7" />
-                    <path d="M19 12H5" />
-                </svg>
-                <span
-                    class="font-display text-xs uppercase tracking-widest border-b border-transparent group-hover:border-accent pb-0.5">Return
-                    to Base</span>
-            </a>
-        </div>
-
+        <a href="{{ route('welcome') }}" class="group inline-flex items-center gap-3 border border-white/10 bg-white/5 px-8 py-4 hover:border-accent hover:bg-accent/10 transition-all duration-300">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-[#666] group-hover:text-accent transition-colors"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+            <span class="font-display text-xs uppercase tracking-widest text-white group-hover:text-accent">Go Back Home</span>
+        </a>
     </div>
+
+    {{-- Decor --}}
+    <div class="absolute bottom-10 right-10 font-display text-[10px] text-[#444]">
+        SYS_ID: {{ uniqid() }}
+    </div>
+
+</div>
 @endsection

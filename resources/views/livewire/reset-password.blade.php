@@ -9,14 +9,14 @@
             <div
                 class="inline-flex items-center gap-2 text-accent border border-accent/30 px-3 py-1 rounded-full text-[10px] mb-4 bg-accent/5 backdrop-blur-sm">
                 <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-                SYSTEM OVERRIDE
+                SECURITY UPDATE
             </div>
 
             <h1 class="text-2xl md:text-3xl text-white font-bold tracking-tight mb-2">
-                Update Credentials
+                New Password
             </h1>
             <p class="text-sm text-[#666] px-4">
-                Establish new security password.
+                Please choose a new password for your account.
             </p>
         </div>
 
@@ -68,7 +68,7 @@
                     <div class="relative flex items-center justify-center gap-2">
                         <span wire:loading.remove wire:target="submit"
                             class="font-display uppercase tracking-widest text-xs font-bold transition-colors">
-                            Confirm Change
+                            Confirm Changes
                         </span>
                         <span wire:loading wire:target="submit"
                             class="font-display uppercase tracking-widest text-xs font-bold transition-colors">

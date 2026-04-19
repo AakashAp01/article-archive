@@ -10,17 +10,13 @@
     <div class="max-w-4xl mx-auto px-6 relative z-10">
         
         {{-- Header --}}
-        <div class="mb-12 border-b border-white/10 pb-8">
-            <div class="flex items-center gap-3 mb-4 text-[#00ff88]">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                <span class=" text-xs uppercase tracking-[0.2em]">Legal Protocol // 002</span>
-            </div>
-            <h1 class="text-4xl md:text-5xl font-light text-white mb-4">Terms of Service</h1>
-            <p class="text-[#666]  text-xs">EFFECTIVE DATE: {{ date('F d, Y') }}</p>
-        </div>
+        <x-page-header 
+            title="Terms of Service" 
+            subtitle="Please read our terms and conditions carefully" 
+        />
 
         {{-- Content --}}
-        <div class="prose prose-invert prose-lg max-w-none text-[#a0a0a0]">
+        <article class="prose prose-invert prose-lg max-w-none text-[#a0a0a0]">
             <p>
                 Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the <strong>AkashAp.dev</strong> website (the "Service"). Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms.
             </p>

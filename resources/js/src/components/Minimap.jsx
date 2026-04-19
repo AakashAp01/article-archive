@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { Maximize2, X, Scan } from 'lucide-react';
+import { Maximize2, X } from 'lucide-react';
+import ArticleDot from './ArticleDot';
+import MinimapIndicator from './MinimapIndicator';
 
 const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -46,7 +48,6 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
     const mouseY = e.clientY - rect.top;
 
     // 3. Calculate the "World Point" under the mouse before zooming
-    // This is the specific pixel on the map image itself
     const worldX = (mouseX - transform.x) / transform.k;
     const worldY = (mouseY - transform.y) / transform.k;
 
@@ -54,10 +55,7 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
     let newX = mouseX - (worldX * newScale);
     let newY = mouseY - (worldY * newScale);
 
-    // 5. Boundary Clamping (Crucial for alignment feel)
-    // Ensure we don't drag/zoom past the edges (no white space visible)
-    // The map width is rect.width * newScale. 
-    // The max X translate is 0 (left edge), min X is rect.width - mapWidth
+    // 5. Boundary Clamping
     const minX = rect.width - (rect.width * newScale);
     const minY = rect.height - (rect.height * newScale);
 
@@ -71,7 +69,6 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
   const handleMouseDown = (e) => {
     if (!isExpanded) return;
     
-    // FIX 1: Only allow drag if zoomed in
     if (transform.k <= 1) return;
 
     e.preventDefault();
@@ -112,7 +109,6 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
             onJump(e, mapRef.current.getBoundingClientRect());
         }
     } else if (isExpanded && transform.k === 1) {
-       // Allow click-to-jump even if not dragging (when at 100% zoom)
        onJump(e, mapRef.current.getBoundingClientRect());
     }
   };
@@ -124,10 +120,10 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
   return (
     <>
       <div
-        className={`transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)]
+        className={`transition-all duration-300 rounded ease-[cubic-bezier(0.25,0.8,0.25,1)]
           ${isExpanded
             ? "fixed inset-0 z-[200] bg-black/80 backdrop-blur-md flex items-center justify-center pointer-events-auto"
-            : "absolute top-4 right-4 md:relative md:top-auto md:right-auto pointer-events-auto z-[80]"
+            : "relative pointer-events-auto z-[80] md:flex md:items-end md:justify-end"
           }
         `}
         onClick={(e) => {
@@ -145,6 +141,19 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
             </button>
         )}
 
+        {/* MOBILE TRIGGER BUTTON (Only visible when not expanded on mobile) */}
+        {!isExpanded && (
+            <button
+                onClick={() => setIsExpanded(true)}
+                className="md:hidden fixed right-0 top-1/2 -translate-y-1/2 bg-[#050505] border-y border-l border-white/20 p-3 rounded-l-xl text-[#00ff88] shadow-2xl z-[100] hover:border-[#00ff88] transition-all active:scale-95"
+            >
+                <div className="flex flex-col items-center gap-1">
+                    <Maximize2 size={18} />
+                    <span className="text-[8px] font-bold tracking-tighter uppercase font-mono">Map</span>
+                </div>
+            </button>
+        )}
+
         {/* MAP CONTAINER */}
         <div
           ref={mapRef}
@@ -158,10 +167,10 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseLeave}
           className={`
-            relative overflow-hidden shadow-2xl transition-all duration-300 bg-[#050505] border
+            relative overflow-hidden shadow-2xl rounded transition-all duration-300 bg-[#050505] border
             ${isExpanded
-              ? "w-[80vmin] h-[80vmin] border-[#00ff88]/50"
-              : "w-[100px] h-[100px] border-white/10 hover:border-[#00ff88] cursor-pointer"
+              ? "w-[85vmin] h-[85vmin] border-[#00ff88]/50 rounded-lg shadow-[0_0_50px_rgba(0,255,136,0.1)]"
+              : "hidden md:block w-[100px] h-[100px] border-white/10 hover:border-[#00ff88] cursor-pointer"
             }
             ${/* Dynamic Cursor Class */
               isExpanded 
@@ -184,7 +193,6 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
             {isExpanded && (
               <div className="absolute inset-0 w-full h-full pointer-events-none"
                 style={{ 
-                  // Adjusted grid to fit the container perfectly so zooming feels grounded
                   backgroundImage: 'linear-gradient(#00ff88 1px, transparent 1px), linear-gradient(90deg, #00ff88 1px, transparent 1px)', 
                   backgroundSize: '40px 40px',
                   opacity: 0.2, 
@@ -192,45 +200,17 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
               </div>
             )}
 
-            <div
-              ref={indicatorRef}
-              className="absolute z-[51] flex items-center justify-center pointer-events-none w-0 h-0"
-              style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}
-            >
-              <div className={`absolute border border-dashed border-[#00ff88] rounded-full animate-[spin_4s_linear_infinite] opacity-60 ${isExpanded ? "w-16 h-16" : "w-6 h-6"}`}></div>
-              <div className={`absolute border border-[#00ff88] rounded-full flex items-center justify-center ${isExpanded ? "w-8 h-8 opacity-80" : "w-3 h-3 opacity-0"}`}>
-                 <Scan size={isExpanded ? 16 : 0} className="text-[#00ff88]" />
-              </div>
-              <div className={`absolute bg-[#00ff88] rounded-full shadow-[0_0_15px_#00ff88] ${isExpanded ? "w-2 h-2 animate-pulse" : "w-1.5 h-1.5"}`}></div>
-            </div>
+            <MinimapIndicator ref={indicatorRef} isExpanded={isExpanded} />
 
-            {articles.map(art => {
-              const leftPct = 50 + ((art.x / worldLimit) * 50);
-              const topPct = 50 + ((art.y / worldLimit) * 50);
-              const color = art.category ? art.category.color_code : '#00ff88';
-
-              return (
-                <div
-                  key={art.id}
-                  title={art.title}
-                  onMouseDown={(e) => e.stopPropagation()} 
-                  onMouseUp={(e) => handleDotClick(e, art)}
-                  className={`
-                    absolute rounded-full cursor-pointer transition-all duration-200 z-50
-                    hover:shadow-[0_0_20px_${color}] hover:scale-150
-                    ${isExpanded ? "w-3 h-3 ring-2 ring-black bg-black" : "w-1.5 h-1.5 bg-current"}
-                  `}
-                  style={{
-                    backgroundColor: isExpanded ? 'black' : color,
-                    borderColor: color,
-                    borderWidth: isExpanded ? '2px' : '0px',
-                    left: `${leftPct}%`,
-                    top: `${topPct}%`,
-                    transform: 'translate(-50%, -50%)'
-                  }}
-                />
-              );
-            })}
+            {articles.map(art => (
+              <ArticleDot 
+                key={art.id} 
+                art={art} 
+                worldLimit={worldLimit} 
+                isExpanded={isExpanded} 
+                onDotClick={handleDotClick} 
+              />
+            ))}
           </div>
           
           <div className={`absolute top-2 right-2 text-[#00ff88] pointer-events-none transition-opacity duration-300 z-10 ${isExpanded ? 'opacity-0' : 'opacity-0 hover:opacity-100'}`}>

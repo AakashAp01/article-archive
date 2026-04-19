@@ -44,7 +44,6 @@
         $user = App\Models\User::find(Auth::id());
     @endphp
     <div id="app" data-user='@json($user)'></div>
-    <x-cookie-consent />
     @viteReactRefresh
     @vite(['resources/js/app.jsx'])
 </body>

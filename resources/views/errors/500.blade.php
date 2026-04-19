@@ -1,41 +1,38 @@
 @extends('layout.error')
-@section('title', '500 Internal Server Error')
+@section('title', '500 - Server Error')
 @section('content')
-    <div class="bg-bg text-white h-screen flex flex-col items-center justify-center relative overflow-hidden">
+<div class="bg-bg text-white h-screen flex flex-col items-center justify-center relative overflow-hidden selection:bg-red-500 selection:text-black">
 
-        {{-- Red Glow for Error --}}
-        <div
-            class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,51,51,0.05)_0%,transparent_70%)] pointer-events-none">
+    {{-- Background Grid & Glow --}}
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+    {{-- Content --}}
+    <div class="relative z-10 text-center px-6">
+        <div class="font-display text-red-500 text-sm tracking-[0.3em] mb-4 animate-pulse">
+            SERVER ERROR
         </div>
+        
+        <h1 class="text-8xl md:text-9xl font-light tracking-tighter mb-2 opacity-90">
+            500
+        </h1>
+        
+        <div class="h-px w-24 bg-red-500/50 mx-auto my-8"></div>
 
-        <div class="relative z-10 text-center px-6 border border-white/10 p-12 bg-black/40 backdrop-blur-sm max-w-lg w-full">
-            <div class="flex justify-center mb-6">
-                <div class="w-16 h-16 border border-danger/30 rounded-full flex items-center justify-center bg-danger/5">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.5" class="text-danger">
-                        <path
-                            d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                        <line x1="12" y1="9" x2="12" y2="13" />
-                        <line x1="12" y1="17" x2="12.01" y2="17" />
-                    </svg>
-                </div>
-            </div>
+        <p class="font-display text-[#888] text-sm max-w-md mx-auto leading-relaxed mb-10">
+            Something went wrong on our end. We've been notified and are looking into it.
+        </p>
 
-            <h1 class="text-4xl font-light tracking-tight mb-2">
-                CRITICAL FAILURE
-            </h1>
-            <p class="font-display text-danger text-xs tracking-widest mb-8">ERROR_CODE_500 // INTERNAL_SERVER_ERROR</p>
-
-            <p class="font-display text-[#888] text-sm leading-relaxed mb-8">
-                The system encountered an unrecoverable logic paradox. Core dump initialized. Engineers have been notified
-                of the anomaly.
-            </p>
-
-            <a href="{{ url('/') }}"
-                class="inline-block w-full bg-white text-black font-display text-xs font-bold uppercase py-4 hover:bg-gray-200 transition-colors">
-                Attempt System Restart
-            </a>
-        </div>
-
+        <a href="{{ route('welcome') }}" class="group inline-flex items-center gap-3 border border-white/10 bg-white/5 px-8 py-4 hover:border-red-500 hover:bg-red-500/10 transition-all duration-300">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-[#666] group-hover:text-red-500 transition-colors"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+            <span class="font-display text-xs uppercase tracking-widest text-white group-hover:text-red-500">Go Back Home</span>
+        </a>
     </div>
+
+    {{-- Decor --}}
+    <div class="absolute bottom-10 right-10 font-display text-[10px] text-[#444]">
+        SYS_ID: {{ uniqid() }}
+    </div>
+
+</div>
 @endsection

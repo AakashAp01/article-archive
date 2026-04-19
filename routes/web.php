@@ -34,7 +34,7 @@ Route::middleware('guest')->group(function () {
 
     Route::get('auth/google/callback', [AuthController::class, 'callback']);
 
-    Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
+    Route::get('reset-password/{token}', ResetPassword::class)->name('password.reset');
 
 });
 
@@ -64,7 +64,7 @@ Route::middleware('auth','throttle:60,1')->group(function () {
 
     //setting 
     Route::get('admin/settings', SettingsManager::class)->name('settings');
-    Route::get('/saved-articles', SavedArticles::class)->name('articles.saved');
+    Route::get('saved-articles', SavedArticles::class)->name('articles.saved');
 });
 
 // 4. Wildcard Routes
@@ -80,3 +80,4 @@ Route::view('privacy-policy', 'privacy')->name('privacy');
 Route::view('terms-of-service', 'terms')->name('terms');
 
 
+Route::get('send-article', [ArticleController::class, 'sendArticle']);

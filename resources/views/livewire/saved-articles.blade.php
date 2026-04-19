@@ -1,12 +1,12 @@
 <main class="max-w-7xl mx-auto mt-32 px-6 pb-20 relative">
     
-    {{-- Header & Filters --}}
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-white/10 pb-6">
-        <div>
-            <h1 class="text-2xl text-white font-semibold mb-2">Saved Archives</h1>
-            <p class="text-xs text-[#666] uppercase tracking-widest">Personal Data Collection</p>
-        </div>
+    {{-- Header Section --}}
+    <x-page-header 
+        title="Saved Articles" 
+        subtitle="Your personal collection of bookmarked stories" 
+    />
 
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
         <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
             <div class="relative group min-w-[180px]">
                 <select wire:model.live="categoryFilter" 
@@ -24,7 +24,7 @@
             <div class="relative group w-full md:w-64">
                 <input wire:model.live.debounce.300ms="search" type="text"
                     class="w-full bg-[#0a0a0f] border border-white/10 pl-10 pr-4 py-3 text-xs text-white focus:outline-none focus:border-accent transition-all placeholder-[#444] font-display uppercase tracking-wider"
-                    placeholder="Search Archives...">
+                    placeholder="Search saved articles...">
                 <div class="absolute left-3 top-1/2 -translate-y-1/2 text-[#444] group-focus-within:text-accent transition-colors">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </div>
@@ -96,12 +96,12 @@
                 </div>
                 <h3 class="text-white font-light text-lg mb-2">No Matches Found</h3>
                 <p class="text-[#666] mb-6 text-xs uppercase tracking-widest max-w-sm mx-auto">
-                    {{ $search ? 'Your search parameters yielded no results in the archive.' : 'No archives have been saved to local storage.' }}
+                    {{ $search ? 'No articles found with those search terms.' : "You haven't saved any articles yet." }}
                 </p>
                 @if($search || $categoryFilter)
                     <button wire:click="$set('search', ''); $set('categoryFilter', '')" class="text-accent hover:underline text-xs uppercase tracking-widest">Clear Filters</button>
                 @else
-                    <a href="{{ route('article.index') }}" class="inline-flex items-center gap-2 border border-white/20 px-6 py-3 text-xs text-white uppercase tracking-widest hover:bg-white hover:text-black transition-all">Browse Grid</a>
+                    <a href="{{ route('article.index') }}" class="inline-flex items-center gap-2 border border-white/20 px-6 py-3 text-xs text-white uppercase tracking-widest hover:bg-white hover:text-black transition-all">Browse Articles</a>
                 @endif
             </div>
         @endforelse
@@ -113,31 +113,20 @@
 
     {{-- MODAL: Remove Confirmation --}}
     @if ($isDeleteModalOpen)
-        <div class="fixed inset-0 z-50 flex items-center justify-center">
-            {{-- Backdrop --}}
-            <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" wire:click="closeDeleteModal"></div>
+        <x-modal id="removeSavedModal" 
+            title="Confirm Removal" 
+            subtitle="Are you sure you want to remove this article from your collection?"
+            variant="danger"
+            wire:click="closeDeleteModal"
+            class="text-center">
             
-            {{-- Modal Content --}}
-            <div class="relative w-full max-w-sm p-6 bg-[#0a0a0a] border border-red-500/30 shadow-[0_0_30px_rgba(255,0,0,0.15)] z-10 text-center animate-fade-in-down">
-                <div class="flex justify-center mb-4">
-                    <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
-                    </div>
-                </div>
-                
-                <h3 class="text-lg text-white font-light mb-2">Confirm Removal</h3>
-                <p class="text-xs text-[#888] font-mono mb-6">Remove this article from your personal collection? This action cannot be undone.</p>
-                
-                <div class="flex gap-3">
-                    <button wire:click="closeDeleteModal" class="flex-1 bg-white/5 border border-white/10 text-white py-3 text-[10px] font-bold uppercase tracking-widest hover:bg-white/10 transition-colors">
-                        Cancel
-                    </button>
-                    <button wire:click="remove" class="flex-1 bg-red-500/10 border border-red-500/50 text-red-500 py-3 text-[10px] font-bold uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all">
-                        Remove
-                    </button>
-                </div>
+            <svg class="mx-auto w-12 h-12 text-red-500 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
+            
+            <div class="flex gap-3">
+                <x-button wire:click="closeDeleteModal" variant="outline" class="flex-1">Cancel</x-button>
+                <x-button wire:click="remove" variant="danger" class="flex-1">Remove</x-button>
             </div>
-        </div>
+        </x-modal>
     @endif
 
 </main>

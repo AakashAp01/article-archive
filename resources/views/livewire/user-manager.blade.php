@@ -1,3 +1,4 @@
+@section('title', 'Users')
 <main class="max-w-7xl mx-auto mt-32 px-6 pb-20 relative">
 
     {{-- Header Section --}}

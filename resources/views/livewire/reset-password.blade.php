@@ -1,3 +1,4 @@
+@section('title', 'Reset Password')
 {{-- OUTER CONTAINER --}}
 <div class="min-h-screen w-full flex items-center justify-center px-4 pt-32 pb-12 md:px-8 relative overflow-hidden">
 

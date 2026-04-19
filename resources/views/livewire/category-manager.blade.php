@@ -1,3 +1,4 @@
+@section('title', 'Categories')
 <main class="max-w-7xl mx-auto mt-32 px-6 pb-20 relative ">
 
     {{-- Header Section --}}
@@ -115,7 +116,7 @@
         @endforelse
 
         {{-- Pagination --}}
-        <div class="pt-6">
+        <div class="p-6">
             {{ $categories->links() }} 
         </div>
     </div>

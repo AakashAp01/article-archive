@@ -1,3 +1,4 @@
+@section('title', 'Articles')
 <main class="max-w-7xl mx-auto mt-32 px-6 pb-20 relative ">
 
     {{-- Header Section --}}
@@ -238,7 +239,8 @@
             </div>
         @endforelse
 
-        <div class="pt-6">
+        <div class="p-6">
+            @section('title', 'Articles')
             {{ $articles->links() }}
         </div>
     </div>

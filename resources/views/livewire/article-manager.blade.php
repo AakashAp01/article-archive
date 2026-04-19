@@ -1,3 +1,4 @@
+@section('title', 'Article Editor')
 @push('styles')
     <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     <style>

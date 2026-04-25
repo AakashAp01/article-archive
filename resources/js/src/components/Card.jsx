@@ -8,7 +8,6 @@ const Card = ({ data, isHighlighted, onClick }) => {
   const colorCode = data.category ? data.category.color_code : '#00ff88';
   const catName = data.category ? data.category.name : 'UNCATEGORIZED';
 
-  // Placeholder
   const thumbnailUrl = data.thumbnail || `https://placehold.co/600x400/111/333?text=${encodeURIComponent(data.title.substring(0, 10))}`;
 
   const likeCount = data.likes_count || 0;
@@ -35,7 +34,7 @@ const Card = ({ data, isHighlighted, onClick }) => {
         ${isHighlighted ? 'scale-105 z-40' : ''}
       `}
     >
-      {/* Category Header */}
+      {}
       <div
         className="font-[Courier_New] text-xs flex justify-between mb-4 shrink-0"
         style={{ color: colorCode }}
@@ -52,7 +51,7 @@ const Card = ({ data, isHighlighted, onClick }) => {
         </span>
       </div>
 
-      {/* Thumbnail Image */}
+      {}
       <div className="w-full h-40 mb-5 overflow-hidden rounded-sm bg-black/50 shrink-0 relative">
         <img
           src={thumbnailUrl}
@@ -62,7 +61,7 @@ const Card = ({ data, isHighlighted, onClick }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-[rgba(10,10,15,0.9)] to-transparent opacity-60"></div>
       </div>
 
-      {/* Content */}
+      {}
       <div className="flex flex-col grow">
         <h2 className="text-xl md:text-2xl font-light leading-tight mb-3">
           <a
@@ -77,7 +76,7 @@ const Card = ({ data, isHighlighted, onClick }) => {
         </p>
       </div>
 
-      {/* Footer */}
+      {}
       <div className="mt-auto flex justify-between items-center pt-4 border-t border-white/5">
         <a
           href={articleUrl}

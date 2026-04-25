@@ -130,7 +130,6 @@
                 </ul>
             </div>
 
-
             <div>
                 <h4 class="font-display text-sm font-semibold text-white uppercase tracking-widest mb-6">Legal</h4>
                 <ul class="space-y-3 text-sm font-display">
@@ -190,7 +189,6 @@
                     throw new Error(data.message || 'Subscription failed');
                 }
 
-                // Success
                 btn.innerText = 'Subscribed';
                 emailInput.value = '';
                 window.showToast?.('success', 'Subscribed', data.message);

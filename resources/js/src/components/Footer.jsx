@@ -16,16 +16,16 @@ const Footer = ({
         <div className="fixed inset-0 pointer-events-none z-40 p-4 md:p-8 flex flex-col justify-end">
             <div className="relative w-full flex items-end justify-between">
                 
-                {/* 1. Left: Socials & Text */}
+                {}
                 <SocialLinks />
 
-                {/* 2. Center: Coordinates */}
+                {}
                 <CoordinateDisplay ref={coordRef} />
 
-                {/* 3. Right: Minimap & Instructions */}
+                {}
                 <div className="flex flex-col items-end gap-2 md:gap-4 pointer-events-auto">
                     
-                    {/* MINIMAP CONTAINER */}
+                    {}
                     <div className="relative">
                         <Minimap
                             articles={mapData}

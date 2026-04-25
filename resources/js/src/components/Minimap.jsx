@@ -6,7 +6,6 @@ import MinimapIndicator from './MinimapIndicator';
 const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   
-  // Transform State: Scale (Zoom) and Translation (Pan)
   const [transform, setTransform] = useState({ k: 1, x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   
@@ -29,7 +28,6 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
     }
   };
 
-  // --- FIXED ZOOM LOGIC ---
   const handleWheel = (e) => {
     if (!isExpanded) return;
     e.stopPropagation();
@@ -37,25 +35,20 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
 
     const rect = mapRef.current.getBoundingClientRect();
     
-    // 1. Calculate new scale
     const delta = e.deltaY > 0 ? -0.2 : 0.2;
     const newScale = Math.min(Math.max(transform.k + delta, 1), 4);
     
-    if (newScale === transform.k) return; // No change needed
+    if (newScale === transform.k) return; 
 
-    // 2. Calculate mouse position relative to container
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    // 3. Calculate the "World Point" under the mouse before zooming
     const worldX = (mouseX - transform.x) / transform.k;
     const worldY = (mouseY - transform.y) / transform.k;
 
-    // 4. Calculate new Translate to keep that World Point under the mouse
     let newX = mouseX - (worldX * newScale);
     let newY = mouseY - (worldY * newScale);
 
-    // 5. Boundary Clamping
     const minX = rect.width - (rect.width * newScale);
     const minY = rect.height - (rect.height * newScale);
 
@@ -65,7 +58,6 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
     setTransform({ k: newScale, x: newX, y: newY });
   };
 
-  // --- FIXED DRAG LOGIC ---
   const handleMouseDown = (e) => {
     if (!isExpanded) return;
     
@@ -90,7 +82,6 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
     let newX = lastPanRef.current.x + dx;
     let newY = lastPanRef.current.y + dy;
 
-    // Apply same clamping during drag
     const rect = mapRef.current.getBoundingClientRect();
     const minX = rect.width - (rect.width * transform.k);
     const minY = rect.height - (rect.height * transform.k);
@@ -141,7 +132,6 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
             </button>
         )}
 
-        {/* MOBILE TRIGGER BUTTON (Only visible when not expanded on mobile) */}
         {!isExpanded && (
             <button
                 onClick={() => setIsExpanded(true)}
@@ -154,7 +144,6 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
             </button>
         )}
 
-        {/* MAP CONTAINER */}
         <div
           ref={mapRef}
           onDoubleClick={(e) => {
@@ -172,14 +161,13 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
               ? "w-[85vmin] h-[85vmin] border-[#00ff88]/50 rounded-lg shadow-[0_0_50px_rgba(0,255,136,0.1)]"
               : "hidden md:block w-[100px] h-[100px] border-white/10 hover:border-[#00ff88] cursor-pointer"
             }
-            ${/* Dynamic Cursor Class */
+            ${
               isExpanded 
                 ? (transform.k > 1 ? (isDragging ? "cursor-grabbing" : "cursor-grab") : "cursor-crosshair")
                 : "cursor-pointer"
             }
           `}
         >
-          {/* ZOOMABLE LAYER */}
           <div 
             className="w-full h-full absolute inset-0 will-change-transform origin-top-left"
             style={{ 
@@ -189,7 +177,6 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
                     : `translate3d(0,0,0) scale(1)`
             }}
           >
-            {/* Grid Background */}
             {isExpanded && (
               <div className="absolute inset-0 w-full h-full pointer-events-none"
                 style={{ 
@@ -209,8 +196,8 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
                 worldLimit={worldLimit} 
                 isExpanded={isExpanded} 
                 onDotClick={handleDotClick} 
-              />
-            ))}
+                />
+              ))}
           </div>
           
           <div className={`absolute top-2 right-2 text-[#00ff88] pointer-events-none transition-opacity duration-300 z-10 ${isExpanded ? 'opacity-0' : 'opacity-0 hover:opacity-100'}`}>
@@ -226,7 +213,7 @@ const Minimap = ({ articles, onNavigate, onJump, indicatorRef, worldLimit }) => 
 
         {isExpanded && (
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 font-[Courier_New] text-[#00ff88]/50 text-xs tracking-[0.2em] pointer-events-none select-none animate-pulse">
-            SCROLL TO ZOOM {transform.k > 1 ? "// DRAG TO SCAN" : ""}
+            SCROLL TO ZOOM {transform.k > 1 ? "• DRAG TO PAN" : ""}
           </div>
         )}
       </div>

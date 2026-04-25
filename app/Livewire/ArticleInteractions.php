@@ -10,7 +10,6 @@ class ArticleInteractions extends Component
 {
     public Article $article;
     
-    // Inputs
     public $body = '';
     public $replyBody = '';
     public $replyingTo = null;
@@ -27,14 +26,12 @@ class ArticleInteractions extends Component
         $this->article = $article;
     }
 
-    // --- NEW: SAVE LOGIC ---
     public function toggleSave()
     {
         if (!Auth::check()) return redirect()->route('login');
 
         $user = Auth::user();
 
-        // Toggle relationship
         if ($user->savedArticles()->where('article_id', $this->article->id)->exists()) {
             $user->savedArticles()->detach($this->article->id);
             $msg = 'Article removed from saved list.';
@@ -129,7 +126,7 @@ class ArticleInteractions extends Component
         
         return view('livewire.article-interactions', [
             'isLiked' => $user ? $this->article->likes()->where('user_id', $user->id)->exists() : false,
-            'isSaved' => $user ? $user->savedArticles()->where('article_id', $this->article->id)->exists() : false, // NEW
+            'isSaved' => $user ? $user->savedArticles()->where('article_id', $this->article->id)->exists() : false, 
             'comments' => $this->article->comments()->whereNull('parent_id')->with('user', 'replies.user')->latest()->get(),
             'commentsCount' => $this->article->comments()->count(),
         ]);

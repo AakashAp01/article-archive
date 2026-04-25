@@ -1,14 +1,13 @@
 @section('title', 'Users')
 <main class="max-w-7xl mx-auto mt-32 px-6 pb-20 relative">
 
-    {{-- Header Section --}}
     <x-page-header 
         title="Users" 
         subtitle="Manage application members and permissions" 
     />
 
     <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
-        {{-- Search Bar --}}
+        
         <div class="relative w-full md:w-64 group">
             <input wire:model.live.debounce.300ms="search" type="text"
                 class="w-full bg-black/20 border border-white/10 px-10 py-3 text-xs text-white focus:outline-none focus:border-accent transition-all placeholder-white/20 font-display uppercase tracking-wider"
@@ -29,11 +28,8 @@
         </x-button>
     </div>
 
-
-    {{-- Data Table --}}
     <div class="space-y-4" role="table" aria-label="Personnel Registry">
 
-        {{-- Headers --}}
         <div
             class="hidden md:grid grid-cols-12 gap-4 text-[10px] uppercase tracking-widest text-[#666] px-6 pb-2 font-display" role="row">
             <div class="col-span-4">User Information</div>
@@ -42,23 +38,19 @@
             <div class="col-span-2 text-right">Actions</div>
         </div>
 
-
-        {{-- Rows --}}
         @forelse($users as $user)
             <div
                 class="group relative bg-white/[0.02] border hover:border-accent/50 transition-all duration-300 p-6 md:p-4 rounded-sm
-            {{-- Conditional Styling for Deleted Users --}}
+            
             {{ $user->trashed() ? 'border-red-500/20 opacity-60 grayscale-[0.5]' : 'border-white/5' }}" role="row">
 
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
 
-                    {{-- ID --}}
                     <div class="col-span-1 text-[#666] font-display text-xs" role="cell">
                         <span class="md:hidden mr-2 uppercase tracking-widest text-[10px]">ID:</span>
                         #{{ str_pad($user->id, 3, '0', STR_PAD_LEFT) }}
                     </div>
 
-                    {{-- Identity --}}
                     <div class="col-span-1 md:col-span-1" role="cell">
                         <div class="flex items-center gap-3">
                             <div class="text-sm font-medium text-white group-hover:text-accent transition-colors">
@@ -67,14 +59,12 @@
                         </div>
                     </div>
 
-                    {{-- Email --}}
                     <div class="col-span-1 md:col-span-2 flex items-center md:justify-start" role="cell">
                         <div class="text-[11px] font-mono text-[#888] break-all">
                             {{ $user->email }}
                         </div>
                     </div>
 
-                    {{-- Role --}}
                     <div class="col-span-1 md:col-span-2 flex md:justify-center" role="cell">
                         @if (!$user->trashed())
                             <x-badge wire:click="toggleType({{ $user->id }})" 
@@ -86,7 +76,6 @@
                         @endif
                     </div>
 
-                    {{-- Verification --}}
                     <div class="col-span-1 md:col-span-2 flex md:justify-center" role="cell">
                         @if (!$user->trashed())
                             <button wire:click="toggleVerification({{ $user->id }})"
@@ -111,10 +100,9 @@
                         @endif
                     </div>
 
-                    {{-- Status (Active / Blocked / Deleted) --}}
                     <div class="col-span-1 md:col-span-2 flex md:justify-center" role="cell">
                         @if ($user->trashed())
-                            {{-- DELETED STATE (Red Dot) --}}
+                            
                             <div class="flex items-center gap-2">
                                 <span class="relative flex h-2 w-2">
                                     <span
@@ -124,7 +112,7 @@
                                 <x-badge variant="danger" text="Terminated" class="border-none bg-transparent !p-0 font-bold" />
                             </div>
                         @else
-                            {{-- ACTIVE/BLOCKED TOGGLE --}}
+                            
                             <button wire:click="toggleStatus({{ $user->id }})" class="flex items-center gap-3">
                                 <div
                                     class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none 
@@ -142,12 +130,11 @@
                         @endif
                     </div>
 
-                    {{-- Actions --}}
                     <div
                         class="col-span-1 md:col-span-2 flex items-center justify-start md:justify-end gap-2 mt-4 md:mt-0 pt-4 md:pt-0 border-t md:border-t-0 border-white/5" role="cell">
 
                         @if ($user->trashed())
-                            {{-- 1. RESTORE BUTTON --}}
+                            
                             <x-button wire:click="restore({{ $user->id }})" title="Restore Account" variant="outline" class="!w-8 !h-8 !p-0 border-green-500/30 bg-green-500/10 text-green-400 hover:bg-green-500">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2">
@@ -156,7 +143,7 @@
                                 </svg>
                             </x-button>
                         @else
-                            {{-- 2. LOGIN AS USER --}}
+                            
                             @if ($user->id !== auth()->id())
                                 <x-button wire:click="loginAsUser({{ $user->id }})" title="Simulate User Session" variant="accent-outline" class="!w-8 !h-8 !p-0">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -168,7 +155,6 @@
                                 </x-button>
                             @endif
 
-                            {{-- 3. EDIT --}}
                             <x-button wire:click="edit({{ $user->id }})" variant="outline" class="!w-8 !h-8 !p-0">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2">
@@ -177,7 +163,6 @@
                             </x-button>
                         @endif
 
-                        {{-- 4. DELETE --}}
                         <x-button wire:click="confirmDelete({{ $user->id }})" 
                             title="{{ $user->trashed() ? 'Permanently Delete' : 'Archive User' }}"
                             variant="danger" class="!w-8 !h-8 !p-0 {{ !$user->trashed() ? '!bg-red-500/5 !text-red-400 hover:!bg-red-500 hover:!text-white' : '' }}">
@@ -198,7 +183,6 @@
                     </div>
                 </div>
 
-                {{-- Decor --}}
                 <div class="absolute top-0 left-0 w-2 h-2 border-l border-t border-white/20 group-hover:border-accent">
                 </div>
                 <div
@@ -218,7 +202,6 @@
         </div>
     </div>
 
-    {{-- Create/Edit Modal --}}
     @if ($isModalOpen)
         <x-modal id="userModal" 
             :title="$userId ? 'Edit User' : 'New User'" 
@@ -267,7 +250,6 @@
                         @enderror
                     </div>
 
-                    {{-- Status Checkbox --}}
                     <div class="flex items-center gap-3 border border-white/10 p-3 bg-white/5">
                         <input wire:model="status" type="checkbox" id="modalActive" value="1"
                             class="w-4 h-4 rounded border-gray-300 text-accent focus:ring-accent bg-transparent">
@@ -286,7 +268,6 @@
         </x-modal>
     @endif
 
-    {{-- Delete Modal --}}
     @if ($isDeleteModalOpen)
         <x-modal id="deleteModal" 
             title="Confirm Termination" 

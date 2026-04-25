@@ -1,5 +1,5 @@
 @props([
-    'variant' => 'default', // default, success, danger, warning, blue, purple
+    'variant' => 'default', 
     'text' => null,
 ])
 

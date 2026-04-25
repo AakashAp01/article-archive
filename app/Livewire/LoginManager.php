@@ -91,7 +91,6 @@ class LoginManager extends Component
         $this->addError('email', 'Incorrect email or password.');
     }
 
-    // 1. STEP ONE: Validate Input, Generate OTP, Send Email
     private function initiateRegister()
     {
         $this->validate([
@@ -121,7 +120,6 @@ class LoginManager extends Component
         }
     }
 
-    // 2. STEP TWO: Verify OTP and Create User
     private function verifyOtpAndRegister()
     {
         $this->validate([
@@ -154,7 +152,6 @@ class LoginManager extends Component
 
             Auth::login($user);
             
-            // Clear session
             Session::forget('register_data');
             
             DB::commit();

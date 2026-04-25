@@ -4,11 +4,9 @@
 
 <div class="bg-bg text-white h-screen flex flex-col items-center justify-center relative overflow-hidden selection:bg-accent selection:text-black">
 
-    {{-- Background Grid & Glow --}}
     <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
 
-    {{-- Content --}}
     <div class="relative z-10 text-center px-6">
         <div class="font-display text-accent text-sm tracking-[0.3em] mb-4 animate-pulse">
             SUCCESS

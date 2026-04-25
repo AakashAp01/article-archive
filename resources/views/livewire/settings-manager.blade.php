@@ -1,7 +1,6 @@
 @section('title', 'Settings')
 <main class="max-w-7xl mx-auto mt-32 px-6 pb-20 relative">
 
-    {{-- Page Header --}}
     <x-page-header 
         title="Settings" 
         subtitle="Configure your application preferences" 
@@ -9,10 +8,8 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
 
-        {{-- LEFT COLUMN: Modules Sidebar --}}
         <nav class="lg:col-span-1 space-y-6" aria-label="Settings Categories">
             
-            {{-- Module List --}}
             <div class="bg-[#0a0a0a] border border-white/10 p-2 rounded-sm sticky top-32">
                 <div class="px-4 py-3 border-b border-white/5 mb-2 flex justify-between items-center">
                     <span class="text-[10px] text-[#666] uppercase tracking-widest font-display">Modules</span>
@@ -37,10 +34,8 @@
             </div>
         </nav>
 
-        {{-- RIGHT COLUMN: Active Module Settings --}}
         <div class="lg:col-span-3">
             
-            {{-- Module Header & Controls --}}
             <div class="bg-white/[0.02] border border-white/5 p-6 rounded-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <div class="flex items-center gap-3">
@@ -65,20 +60,17 @@
                 </div>
             </div>
 
-            {{-- Grid Headers --}}
             <div class="hidden md:grid grid-cols-12 gap-4 text-[10px] uppercase tracking-widest text-[#666] px-6 pb-2 font-display">
                 <div class="col-span-4">Variable Key</div>
                 <div class="col-span-7">Value Configuration</div>
                 <div class="col-span-1 text-right">Action</div>
             </div>
 
-            {{-- Settings List --}}
             <div class="space-y-2" role="table" aria-label="Variables in {{ $activeGroup }}">
                 @forelse($settings as $setting)
                     <div class="group relative bg-black/20 border border-white/5 hover:border-white/20 transition-all duration-300 p-4 rounded-sm" role="row">
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
                             
-                            {{-- Key Name --}}
                             <div class="col-span-4" role="cell">
                                 <label class="block text-xs text-white uppercase tracking-wider font-bold mb-1">
                                     {{ $setting->key }}
@@ -88,7 +80,6 @@
                                 </span>
                             </div>
 
-                            {{-- Value Input --}}
                             <div class="col-span-7" role="cell">
                                 <div class="relative group/input">
                                     @if(strlen($setting->value) > 60)
@@ -103,7 +94,6 @@
                                             class="w-full bg-[#050505] border border-white/10 px-3 py-2 text-sm text-[#ddd] focus:text-white focus:outline-none focus:border-accent transition-all placeholder-[#333] font-mono rounded-sm">
                                     @endif
                                     
-                                    {{-- Save Indicator --}}
                                     <div class="absolute right-2 top-2 w-1.5 h-1.5 bg-accent rounded-full opacity-0 transition-opacity" 
                                          wire:loading.class="opacity-100" 
                                          wire:target="updateSetting({{ $setting->id }}, $event.target.value)">
@@ -111,7 +101,6 @@
                                 </div>
                             </div>
 
-                            {{-- Actions --}}
                             <div class="col-span-1 text-right flex justify-end" role="cell">
                                 @if(!$setting->is_locked)
                                     <x-button wire:click="confirmDelete({{ $setting->id }})" variant="outline" class="!w-8 !h-8 !p-0 border-transparent text-[#333] hover:text-red-500">
@@ -126,7 +115,6 @@
 
                         </div>
                         
-                        {{-- Hover Corner Accents --}}
                         <div class="absolute top-0 left-0 w-1.5 h-1.5 border-l border-t border-white/10 group-hover:border-accent transition-colors"></div>
                         <div class="absolute bottom-0 right-0 w-1.5 h-1.5 border-r border-b border-white/10 group-hover:border-accent transition-colors"></div>
                     </div>
@@ -140,9 +128,6 @@
         </div>
     </div>
 
-    {{-- ================= MODALS ================= --}}
-
-    {{-- 1. ADD MODULE MODAL --}}
     @if($isAddGroupModalOpen)
         <x-modal id="addGroupModal" title="New Module" subtitle="Initialize system sector" wire:click="closeAddGroupModal">
             <div class="space-y-6">
@@ -156,7 +141,6 @@
         </x-modal>
     @endif
 
-    {{-- 2. EDIT MODULE MODAL --}}
     @if($isEditGroupModalOpen)
         <x-modal id="editGroupModal" title="Rename Module" subtitle="Update system identifier" wire:click="closeEditGroupModal">
             <div class="space-y-6">
@@ -173,7 +157,6 @@
         </x-modal>
     @endif
 
-    {{-- 3. ADD VARIABLE MODAL --}}
     @if($isAddKeyModalOpen)
         <x-modal id="addKeyModal" title="Inject Variable" subtitle="Extend module parameters" wire:click="closeAddKeyModal">
             <div class="space-y-6">
@@ -191,7 +174,6 @@
         </x-modal>
     @endif
 
-    {{-- 4. DELETE KEY CONFIRM --}}
     @if ($isDeleteModalOpen)
         <x-modal id="deleteKeyModal" title="Confirm Purge" subtitle="Permanently remove variable" variant="danger" wire:click="closeDeleteModal" class="text-center">
             <svg class="mx-auto w-12 h-12 text-red-500 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
@@ -202,7 +184,6 @@
         </x-modal>
     @endif
 
-    {{-- 5. DELETE GROUP CONFIRM --}}
     @if ($isDeleteGroupModalOpen)
         <x-modal id="deleteGroupModal" title="Nuclear Option" subtitle="Wipe entire module" variant="danger" wire:click="closeDeleteGroupModal" class="text-center">
             <svg class="mx-auto w-12 h-12 text-red-500 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>

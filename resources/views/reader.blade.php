@@ -216,7 +216,7 @@
                                     <a href="{{ route('article.show', $rec->slug) }}"
                                         class="text-sm text-[#666] group-hover:text-white transition-colors leading-snug font-semibold">{{ $rec->title }}</a>
                                     <span
-                                        class="text-[10px] text-[#444] mt-1 transition-colors group-hover:text-accent-dynamic">{{ $rec->date->format('M d') }}</span>
+                                        class="text-[13px] text-[#555] mt-1 transition-colors group-hover:text-accent-dynamic">{{ $rec->date->format('M d') }}</span>
                                 </div>
                             </li>
                         @empty
@@ -274,7 +274,7 @@
                 </header>
 
                 <div id="article-content" class="prose prose-invert prose-lg max-w-none">
-                    {!! \Illuminate\Support\Str::markdown($article->content) !!}
+                    {!! Str::markdown($article->content) !!}
                 </div>
             </article>
 
@@ -297,7 +297,7 @@
                     <x-button type="a" href="{{ route('article.show', $nextRead->slug) }}" variant="outline" class="group !p-5 !justify-end gap-4 h-full">
                         <div class="flex flex-col text-right">
                             <span class="text-[10px] text-[#666] uppercase tracking-[0.2em] font-mono mb-1">Read Next</span>
-                            <span class="text-sm font-bold text-gray-300 group-hover:text-white line-clamp-1 truncate">{{ strtoupper($nextRead->title) }}</span>
+                            <span class="text-sm font-bold text-gray-300 group-hover:text-white line-clamp-1 truncate">{{ Str::limit(strtoupper($nextRead->title), 20) }}</span>
                         </div>
                         <div class="w-12 h-12 shrink-0 rounded-full border border-white/10 flex items-center justify-center group-hover:border-accent group-hover:text-accent transition-colors">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -310,7 +310,6 @@
 
         </main>
     </div>
-
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

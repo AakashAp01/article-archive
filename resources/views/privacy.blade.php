@@ -4,18 +4,15 @@
 @section('content')
 <div class="bg-[#0a0a0f] min-h-screen pt-32 pb-20 relative overflow-hidden">
     
-    {{-- Background Grid --}}
     <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
 
     <div class="max-w-4xl mx-auto px-6 relative z-10">
         
-        {{-- Header --}}
         <x-page-header 
             title="Privacy Policy" 
             subtitle="How we handle and protect your data" 
         />
 
-        {{-- Content --}}
         <article class="prose prose-invert prose-lg max-w-none text-[#a0a0a0]">
             <p>
                 At <strong>AkashAp.dev</strong> ("we", "our", or "us"), we are committed to protecting your personal data and your right to privacy. This policy outlines our protocols regarding the collection, use, and disclosure of your information when you use our digital services.

@@ -16,13 +16,11 @@ class SearchController extends Controller
             ->where('status', 'published')
             ->where(function ($q) use ($query) {
 
-                // Search in title + content
                 $q->when($query, function ($sub) use ($query) {
                     $sub->where('title', 'like', "%{$query}%")
                         ->orWhere('content', 'like', "%{$query}%");
                 });
 
-                // Search in category name
                 $q->when($query, function ($sub) use ($query) {
                     $sub->orWhereHas('category', function ($cat) use ($query) {
                         $cat->where('name', 'like', "%{$query}%");
@@ -39,7 +37,7 @@ class SearchController extends Controller
 
     public function fetchViewport(Request $request)
     {
-        // Validate the bounding box sent from React
+        
         $validated = $request->validate([
             'min_x' => 'required|integer',
             'max_x' => 'required|integer',
@@ -48,7 +46,7 @@ class SearchController extends Controller
         ]);
 
         $articles = Article::query()
-            // OPTIMIZATION: Only select what the Card needs. No 'content' (too heavy).
+            
             ->select('id', 'title', 'slug', 'excerpt', 'category_id', 'tags', 'date', 'x', 'y','thumbnail')
             ->with('category:id,name,color_code')
             ->withCount('likes')

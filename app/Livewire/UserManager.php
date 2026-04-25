@@ -60,7 +60,6 @@ class UserManager extends Component
         ])->layout('layout.app');
     }
 
-    // Login As User 
     public function loginAsUser($id)
     {
         $user = User::withTrashed()->findOrFail($id);
@@ -153,11 +152,11 @@ class UserManager extends Component
         $user = User::withTrashed()->findOrFail($this->idToDelete);
 
         if ($user->trashed()) {
-            // If already soft deleted, force delete
+            
             $user->forceDelete();
             $msg = 'Record Permanently Removed';
         } else {
-            // Soft delete
+            
             $user->delete();
             $msg = 'User Deleted Successfully';
         }
@@ -169,8 +168,6 @@ class UserManager extends Component
         ]);
         $this->closeModal();
     }
-
-    // --- TOGGLES ---
 
     public function toggleStatus($id)
     {
@@ -211,8 +208,6 @@ class UserManager extends Component
         $this->dispatch('show-toast', ['type' => 'success', 'title' => 'Updated!', 'message' => $msg]);
     }
 
-
-    // --- NEW: Restore User ---
     public function restore($id)
     {
         $user = User::withTrashed()->findOrFail($id);

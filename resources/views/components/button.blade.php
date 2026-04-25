@@ -1,6 +1,6 @@
 @props([
-    'variant' => 'primary', // primary, secondary, outline, danger, accent-outline
-    'type' => 'button',     // button, submit, a
+    'variant' => 'primary', 
+    'type' => 'button',     
     'href' => null,
 ])
 

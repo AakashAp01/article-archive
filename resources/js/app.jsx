@@ -11,19 +11,17 @@ import { useViewportFetcher } from './src/hooks/useViewportFetcher';
 const DEFAULT_LIMIT = 4000;
 
 const App = () => {
-    // --- Refs ---
+    
     const worldRef = useRef(null);
     const viewportRef = useRef(null);
     const minimapIndicatorRef = useRef(null);
     const coordRef = useRef(null);
 
-    // --- State ---
     const [activeArticle, setActiveArticle] = useState(null);
     const [highlightedId, setHighlightedId] = useState(null);
     const [mapData, setMapData] = useState([]);
     const [worldLimit, setWorldLimit] = useState(DEFAULT_LIMIT);
 
-    // --- 1. Logic: Calculate Boundary ---
     const dynamicBoundary = useMemo(() => {
         if (mapData.length === 0) return DEFAULT_LIMIT;
         let maxCoord = 0;
@@ -36,7 +34,6 @@ const App = () => {
         return Math.max(DEFAULT_LIMIT, maxCoord + 2000);
     }, [mapData]);
 
-    // --- 2. Physics Engine ---
     const {
         navigateToCard,
         jumpToMinimap,
@@ -54,7 +51,6 @@ const App = () => {
         worldLimit
     );
 
-    // --- 3. Data Fetching ---
     useEffect(() => {
         fetch('/canvas/map')
             .then(res => res.json())
@@ -69,11 +65,9 @@ const App = () => {
             .catch(err => console.error("Bounds Load Error:", err));
     }, []);
 
-    // --- 4. Viewport Card Fetching & User Data ---
     const effectiveCamera = cameraPosition || { x: 0, y: 0 };
     const visibleArticles = useViewportFetcher(effectiveCamera, currentScale);
     
-    // Auth Logic
     const root = document.getElementById("app");
     const user = root.dataset.user ? JSON.parse(root.dataset.user) : null;
     
@@ -85,18 +79,18 @@ const App = () => {
     return (
         <div className="bg-[#0a0a0f] text-[#e0e0e0] overflow-hidden h-screen w-screen relative selection:bg-[#00ff88] selection:text-black">
 
-            {/* --- HEADER --- */}
+            {}
             <Header 
                 user={user} 
                 handleLogout={handleLogout} 
                 mapData={mapData} 
                 onNavigate={(data) => {
-                    setActiveArticle(null); // Clear active state when navigating via search
+                    setActiveArticle(null); 
                     navigateToCard(data);
                 }} 
             />
 
-            {/* --- FOOTER --- */}
+            {}
             <Footer 
                 coordRef={coordRef}
                 mapData={mapData}
@@ -107,7 +101,7 @@ const App = () => {
                 worldLimit={worldLimit}
             />
 
-            {/* WORLD VIEWPORT */}
+            {}
             <WorldViewport 
                 viewportRef={viewportRef}
                 worldRef={worldRef}

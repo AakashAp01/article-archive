@@ -26,11 +26,11 @@ class SettingsManager extends Component
 
     public function mount()
     {
-        // If no groups exist at all, ensure 'site' works
+        
         if (Setting::count() === 0) {
             $this->activeGroup = 'site';
         } else {
-            // Ensure we start on a valid group
+            
             $firstGroup = Setting::value('group');
             if (!Setting::where('group', $this->activeGroup)->exists()) {
                 $this->activeGroup = $firstGroup;
@@ -42,8 +42,7 @@ class SettingsManager extends Component
 
     public function loadSettings()
     {
-        // FIX: Removed the aggressive check that forced redirection.
-        // We now trust $activeGroup is set correctly by the methods.
+        
         $this->settings = Setting::where('group', $this->activeGroup)->get();
     }
 
@@ -63,7 +62,6 @@ class SettingsManager extends Component
         }
     }
 
-    // --- MODULE MANAGEMENT ---
     public function openAddGroupModal() { $this->isAddGroupModalOpen = true; $this->resetValidation(); $this->newGroupName = ''; }
     public function closeAddGroupModal() { $this->isAddGroupModalOpen = false; }
 
@@ -121,13 +119,11 @@ class SettingsManager extends Component
         
         $this->dispatch('show-toast', ['type' => 'error', 'title' => 'Deleted!', 'message' => 'Section deleted.']);
         
-
         $this->activeGroup = Setting::value('group') ?? 'site';
         $this->loadSettings();
         $this->closeDeleteGroupModal();
     }
 
-    // --- KEY MANAGEMENT ---
     public function openAddKeyModal() { $this->isAddKeyModalOpen = true; $this->resetValidation(); $this->reset(['newKey', 'newValue']); }
     public function closeAddKeyModal() { $this->isAddKeyModalOpen = false; }
 
@@ -156,7 +152,6 @@ class SettingsManager extends Component
         $this->dispatch('show-toast', ['type' => 'success', 'title' => 'Saved!', 'message' => 'Setting saved.']);
     }
 
-    // --- DELETION ---
     public function confirmDelete($id) { $this->deleteId = $id; $this->isDeleteModalOpen = true; }
     public function closeDeleteModal() { $this->isDeleteModalOpen = false; $this->deleteId = null; }
 

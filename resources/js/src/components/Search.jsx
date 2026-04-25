@@ -7,7 +7,6 @@ const Search = ({ onNavigate }) => {
   const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   
-  // Use a ref to check click outside if needed, though blur handles most cases
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -64,7 +63,7 @@ const Search = ({ onNavigate }) => {
     <div ref={containerRef} className="pointer-events-auto w-full md:w-auto flex flex-col items-center z-[100]">
       <div className="relative w-[300px] md:w-[400px]">
         
-        {/* Icon (Left Aligned) */}
+        {}
         <div className={`absolute left-0 bottom-3 transition-colors duration-300 ${isFocused || query ? 'text-[#00ff88]' : 'text-[#666]'}`}>
             {loading ? (
                 <Loader2 size={18} className="animate-spin" />
@@ -73,7 +72,7 @@ const Search = ({ onNavigate }) => {
             )}
         </div>
 
-        {/* Input (Bottom Line Only) */}
+        {}
         <input 
           id="search-input"
           type="text" 
@@ -89,12 +88,11 @@ const Search = ({ onNavigate }) => {
           autoComplete="off"
         />
         
-        {/* Suggestions Dropdown */}
+        {}
         {(hasSuggestions) && (
           <div 
             className="absolute top-full left-0 w-full mt-2 bg-[#050505]/95 border border-white/10 backdrop-blur-xl max-h-60 overflow-y-auto shadow-2xl
             
-            /* SCROLLBAR CUSTOMIZATION */
             scrollbar-thin
             [&::-webkit-scrollbar]:w-1
             [&::-webkit-scrollbar-track]:bg-transparent

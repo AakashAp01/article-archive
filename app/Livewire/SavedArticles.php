@@ -14,28 +14,24 @@ class SavedArticles extends Component
     public $search = '';
     public $categoryFilter = '';
     
-    // Modal State
     public $isDeleteModalOpen = false;
     public $deleteId = null;
 
     public function updatedSearch() { $this->resetPage(); }
     public function updatedCategoryFilter() { $this->resetPage(); }
 
-    // 1. Open Confirmation Modal
     public function confirmRemove($articleId)
     {
         $this->deleteId = $articleId;
         $this->isDeleteModalOpen = true;
     }
 
-    // 2. Close Modal
     public function closeDeleteModal()
     {
         $this->isDeleteModalOpen = false;
         $this->deleteId = null;
     }
 
-    // 3. Perform Removal
     public function remove()
     {
         if ($this->deleteId) {

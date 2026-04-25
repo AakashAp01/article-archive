@@ -14,17 +14,11 @@ use Laravel\Socialite\Facades\Socialite;
 class AuthController extends Controller
 {
 
-    /**
-     * Redirect to Google OAuth
-     */
     public function redirect()
     {
         return Socialite::driver('google')->redirect();
     }
 
-    /**
-     * Handle Google callback
-     */
     public function callback()
     {
         try {
@@ -57,9 +51,6 @@ class AuthController extends Controller
         }
     }
 
-    /**
-     * Handle Logout
-     */
     public function destroy(Request $request)
     {
         Auth::logout();

@@ -11,20 +11,16 @@ class ArticleList extends Component
 {
     use WithPagination;
 
-    // --- Filters ---
     public $search = '';
     public $categoryFilter = ''; 
     public $statusFilter = '';  
 
-    // --- Delete State ---
     public $deleteId = null;
     public $isDeleteModalOpen = false;
 
-    // --- Reset Pagination when filters change ---
     public function updatingSearch() { $this->resetPage(); }
     public function updatingCategoryFilter() { $this->resetPage(); }
     public function updatingStatusFilter() { $this->resetPage(); }
-
 
     public function render()
     {
@@ -33,17 +29,14 @@ class ArticleList extends Component
             ->withCount('comments', 'likes')
             ->orderBy('created_at', 'desc');
 
-        // 1. Search Filter
         if ($this->search) {
             $query->where('title', 'like', '%' . $this->search . '%');
         }
 
-        // 2. Category Filter
         if ($this->categoryFilter) {
             $query->where('category_id', $this->categoryFilter);
         }
 
-        // 3. Status Filter
         if ($this->statusFilter) {
             $query->where('status', $this->statusFilter);
         }
@@ -54,13 +47,10 @@ class ArticleList extends Component
         ])->layout('layout.app');
     }
 
-    // --- Actions ---
-
     public function toggleStatus($id)
     {
         $article = Article::findOrFail($id);
 
-        // Toggle Status
         if ($article->status === 'published') {
             $article->status = 'draft';
             $msgType = 'success';

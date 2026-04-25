@@ -1,14 +1,13 @@
 @section('title', 'Categories')
 <main class="max-w-7xl mx-auto mt-32 px-6 pb-20 relative ">
 
-    {{-- Header Section --}}
     <x-page-header 
         title="Categories" 
         subtitle="Manage your article categories and organization" 
     />
 
     <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
-        {{-- Search Bar --}}
+        
         <div class="relative w-full md:w-64 group">
             <input wire:model.live.debounce.300ms="search" type="text"
                 class="w-full bg-black/20 border border-white/10 px-10 py-3 text-xs text-white focus:outline-none focus:border-accent transition-all placeholder-white/20 font-display uppercase tracking-wider"
@@ -18,17 +17,14 @@
             </div>
         </div>
 
-        {{-- Initialize Button --}}
         <x-button wire:click="openModal" variant="accent-outline" class="w-full md:w-auto">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mr-3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             Add New Category
         </x-button>
     </div>
 
-    {{-- Data Table / Grid --}}
     <div class="space-y-4" role="table" aria-label="Article Categories">
 
-        {{-- Grid Headers (Desktop) --}}
         <div class="hidden md:grid grid-cols-12 gap-4 text-[10px] uppercase tracking-widest text-[#666] px-6 pb-2 font-display">
             <div class="col-span-1">ID</div>
             <div class="col-span-1">Color</div>
@@ -38,18 +34,15 @@
             <div class="col-span-2 text-right">Actions</div>
         </div>
 
-        {{-- Rows --}}
         @forelse($categories as $cat)
             <div class="group relative bg-white/[0.02] border border-white/5 hover:border-accent/50 transition-all duration-300 p-6 md:p-4 rounded-sm" role="row">
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
 
-                    {{-- ID --}}
                     <div class="col-span-1 text-[#666] font-display text-xs" role="cell">
                         <span class="md:hidden mr-2 uppercase tracking-widest text-[10px]">ID:</span>
                         #{{ str_pad($cat->id, 3, '0', STR_PAD_LEFT) }}
                     </div>
 
-                    {{-- Color --}}
                     <div class="col-span-1" role="cell">
                         <div class="flex items-center gap-3">
                             <div class="w-3 h-3 rounded-full shadow-[0_0_10px_rgba(0,0,0,0.5)]" 
@@ -58,17 +51,14 @@
                         </div>
                     </div>
 
-                    {{-- Name --}}
                     <div class="col-span-1 md:col-span-4" role="cell">
                         <h3 class="text-white text-base group-hover:text-accent transition-colors font-light">{{ $cat->name }}</h3>
                     </div>
 
-                    {{-- Status Toggle --}}
                     <div class="col-span-1 md:col-span-2 flex items-center md:justify-center" role="cell">
                         <button wire:click="toggleStatus({{ $cat->id }})" 
                             class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none {{ $cat->status ? 'bg-accent/20' : 'bg-white/10' }}">
                             
-                            {{-- Slider --}}
                             <span aria-hidden="true" 
                                 class="pointer-events-none inline-block h-4 w-4 transform rounded-full shadow ring-0 transition duration-200 ease-in-out {{ $cat->status ? 'translate-x-5 bg-accent' : 'translate-x-0 bg-[#666]' }}">
                             </span>
@@ -78,13 +68,11 @@
                         </x-badge>
                     </div>
 
-                    {{-- Date --}}
                     <div class="col-span-1 md:col-span-2 text-xs text-[#666] uppercase font-display" role="cell">
                         <span class="md:hidden mr-2 uppercase tracking-widest text-[10px]">Updated:</span>
                         {{ $cat->updated_at->diffForHumans() }}
                     </div>
 
-                    {{-- Actions --}}
                     <div class="col-span-1 md:col-span-2 flex items-center justify-start md:justify-end gap-2 mt-4 md:mt-0 pt-4 md:pt-0 border-t md:border-t-0 border-white/5" role="cell">
                         <x-button wire:click="edit({{ $cat->id }})" variant="outline" class="!w-8 !h-8 !p-0">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -104,7 +92,6 @@
                     </div>
                 </div>
 
-                {{-- Hover Corners --}}
                 <div class="absolute top-0 left-0 w-2 h-2 border-l border-t border-white/20 group-hover:border-accent"></div>
                 <div class="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-white/20 group-hover:border-accent"></div>
             </div>
@@ -115,13 +102,11 @@
             </div>
         @endforelse
 
-        {{-- Pagination --}}
         <div class="p-6">
             {{ $categories->links() }} 
         </div>
     </div>
 
-    {{-- Create/Edit Modal --}}
     @if ($isModalOpen)
         <x-modal id="categoryModal" 
             :title="$categoryId ? 'Edit Category' : 'New Category'" 
@@ -130,7 +115,7 @@
             
             <form wire:submit="store">
                 <div class="space-y-6">
-                    {{-- Name Input --}}
+                    
                     <div>
                         <label class="block text-[10px] text-[#888] uppercase tracking-widest mb-2 font-mono">Category Name</label>
                         <input wire:model="name" type="text"
@@ -139,7 +124,6 @@
                         @error('name') <span class="text-red-500 text-[10px] uppercase mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
-                    {{-- Color Input --}}
                     <div>
                         <label class="block text-[10px] text-[#888] uppercase tracking-widest mb-2 font-mono">Color Code</label>
                         <div class="flex gap-4">
@@ -149,13 +133,11 @@
                         @error('color_code') <span class="text-red-500 text-[10px] uppercase mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
-                    {{-- Status Checkbox --}}
                     <div class="flex items-center gap-3 border border-white/10 p-3 bg-white/5">
                         <input wire:model="status" type="checkbox" id="modalStatus" class="w-4 h-4 rounded border-gray-300 text-accent focus:ring-accent bg-transparent">
                         <label for="modalStatus" class="text-xs text-white font-mono uppercase tracking-wide">Category Active</label>
                     </div>
 
-                    {{-- Submit --}}
                     <div class="pt-4 border-t border-white/5">
                         <x-button type="submit" class="w-full">
                             <span wire:loading.remove wire:target="store">{{ $categoryId ? 'Save Changes' : 'Create Category' }}</span>
@@ -167,7 +149,6 @@
         </x-modal>
     @endif
 
-    {{-- Delete Modal --}}
     @if ($isDeleteModalOpen)
         <x-modal id="deleteCategoryModal" 
             title="Delete Category" 

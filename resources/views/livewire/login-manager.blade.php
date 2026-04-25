@@ -1,11 +1,9 @@
 @section('title', 'Portal')
-{{-- OUTER CONTAINER --}}
+
 <div class="min-h-screen w-full flex items-center justify-center px-4 pt-32 pb-12 md:px-8 relative overflow-hidden">
 
-    {{-- CARD --}}
     <div class="w-full max-w-md relative z-10">
 
-        {{-- Header --}}
         <div class="mb-8 md:mb-10 text-center">
             <div
                 class="inline-flex items-center gap-2 text-accent border border-accent/30 px-3 py-1 rounded-full text-sm mb-4 bg-accent/5 backdrop-blur-sm">
@@ -35,7 +33,6 @@
 
         <form wire:submit="submit" class="space-y-4 md:space-y-5">
 
-            {{-- Success Message --}}
             @if (session()->has('status'))
                 <div
                     class="bg-green-500/10 border border-green-500/20 text-green-500 text-sm px-4 py-3 rounded-sm text-center uppercase tracking-wider">
@@ -43,7 +40,6 @@
                 </div>
             @endif
 
-            {{-- 1. OTP INPUT SECTION (Only visible in OTP Mode) --}}
             @if ($isOtpMode)
                 <div class="animate-fade-in-down">
                     <div class="bg-blue-500/10 border border-blue-500/20 p-4 mb-4 rounded-sm text-center">
@@ -71,9 +67,8 @@
                     </div>
                 </div>
 
-                {{-- 2. STANDARD FORM (Hidden if in OTP Mode) --}}
             @else
-                {{-- Name (Register Only) --}}
+                
                 @if (!$isLoginMode && !$isForgotPassword)
                     <div class="group animate-fade-in-down">
                         <label
@@ -87,7 +82,6 @@
                     </div>
                 @endif
 
-                {{-- Email --}}
                 <div class="group">
                     <label
                         class="block text-sm uppercase tracking-widest text-[#888] mb-2 group-focus-within:text-accent transition-colors">Email</label>
@@ -99,7 +93,6 @@
                     @enderror
                 </div>
 
-                {{-- Password (Not needed for Forgot Password) --}}
                 @if (!$isForgotPassword)
                     <div class="group">
                         <div class="flex justify-between items-center mb-2">
@@ -123,7 +116,6 @@
 
             @endif
 
-            {{-- Submit Button --}}
             <div class="pt-4">
                 <button type="submit"
                     class="group w-full relative overflow-hidden bg-green-500/10 border border-green-500/50 hover:bg-green-500 text-green-500 hover:text-white py-3.5 transition-all duration-300 active:scale-[0.98]">
@@ -154,7 +146,6 @@
             </div>
         </form>
 
-        {{-- Divider --}}
         <div class="relative my-8 text-center">
             <div class="absolute inset-0 flex items-center" aria-hidden="true">
                 <div class="w-full border-t border-white/10"></div>
@@ -164,7 +155,6 @@
             </span>
         </div>
 
-        {{-- GOOGLE LOGIN BUTTON (Only show if NOT in forgot password mode to keep UI clean, or keep it if preferred. I kept it hidden in reset mode for focus) --}}
         @if (!$isForgotPassword)
             <a href="{{ route('google.login') }}"
                 class="flex items-center justify-center gap-3 w-full bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 py-3 transition-all duration-300 group rounded-sm relative overflow-hidden">
@@ -186,7 +176,6 @@
             </a>
         @endif
 
-        {{-- Toggle Mode Footer --}}
         <div class="mt-8 text-center">
             @if ($isForgotPassword)
                 <button wire:click="cancelForgotPassword"

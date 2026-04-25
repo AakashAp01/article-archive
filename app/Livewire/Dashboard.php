@@ -9,7 +9,7 @@ use App\Models\ArticleLike;
 use App\Models\ArticleReport;
 use App\Models\Newsletter;
 use App\Models\Comment;
-use App\Models\Report; // Ensure Report model is imported
+use App\Models\Report; 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -17,7 +17,7 @@ class Dashboard extends Component
 {
     public function render()
     {
-        // 1. KPI Cards Data
+        
         $stats = [
             'users' => User::count(),
             'articles' => Article::count(),
@@ -26,7 +26,6 @@ class Dashboard extends Component
             'likes' => ArticleLike::count(),
         ];
 
-
         $topArticles = Article::with('category')
             ->withCount(['likes', 'comments','reports'])
             ->orderBy('likes_count', 'desc')
@@ -34,8 +33,6 @@ class Dashboard extends Component
             ->take(10)
             ->get();
 
-
-        // 3. Graph Data (Last 6 Months)
         $graphData = $this->getMonthlyTrends();
 
         return view('livewire.dashboard', [

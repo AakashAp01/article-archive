@@ -10,14 +10,12 @@ export const useViewportFetcher = (cameraPosition, scale) => {
     const isFetching = useRef(false);
 
     const fetchCards = useCallback(async () => {
-        // Safety: Don't fetch if camera isn't ready
+        
         if (!cameraPosition || isFetching.current) return;
 
-        // 1. Calculate Bounds
         const centerX = -cameraPosition.x; 
         const centerY = -cameraPosition.y;
         
-        // Safety: Ensure scale is valid
         const currentScale = scale || 1; 
         const viewportW = window.innerWidth / currentScale;
         const viewportH = window.innerHeight / currentScale;
@@ -29,7 +27,6 @@ export const useViewportFetcher = (cameraPosition, scale) => {
             maxY: centerY + viewportH / 2 + BUFFER
         };
 
-        // 2. Grid Logic
         const gridX = Math.round((centerX) / CHUNK_SIZE);
         const gridY = Math.round((centerY) / CHUNK_SIZE);
         const chunkKey = `${gridX}:${gridY}`;
@@ -37,7 +34,7 @@ export const useViewportFetcher = (cameraPosition, scale) => {
         if (loadedChunks.has(chunkKey)) return; 
 
         isFetching.current = true;
-        console.log(`📡 Fetching Sector ${chunkKey}...`); // Debug Log
+        console.log(`📡 Fetching Sector ${chunkKey}...`); 
 
         try {
             const query = new URLSearchParams({
@@ -47,7 +44,6 @@ export const useViewportFetcher = (cameraPosition, scale) => {
                 max_y: Math.ceil(bounds.maxY + CHUNK_SIZE/2),
             });
 
-            // FIX: Added '/api' prefix
             const response = await fetch(`/canvas/viewport?${query}`);
             
             if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
@@ -70,7 +66,7 @@ export const useViewportFetcher = (cameraPosition, scale) => {
     }, [cameraPosition, scale, loadedChunks]);
 
     useEffect(() => {
-        // If cameraPosition is null (initial load), don't fire
+        
         if (!cameraPosition) return;
 
         const debouncedFetch = debounce(fetchCards, 300);

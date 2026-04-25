@@ -7,14 +7,14 @@ const UserDropdown = ({ user, isDropdownOpen, setIsDropdownOpen, handleLogout })
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 className="flex items-center gap-3 pl-4 focus:outline-none group"
             >
-                {/* Name */}
+                {}
                 <div className="text-right hidden lg:block">
                     <div className="text-xs font-bold text-white uppercase tracking-wider group-hover:text-[#00ff88] transition-colors">
                         {user.name}
                     </div>
                 </div>
 
-                {/* Avatar */}
+                {}
                 <div className="h-8 w-8 rounded-full border border-white/20 overflow-hidden group-hover:border-[#00ff88] group-hover:shadow-[0_0_10px_rgba(0,255,136,0.2)] transition-all duration-300">
                     <img 
                         src={user.avatar}
@@ -23,7 +23,7 @@ const UserDropdown = ({ user, isDropdownOpen, setIsDropdownOpen, handleLogout })
                     />
                 </div>
 
-                {/* Down Arrow */}
+                {}
                 <svg 
                     className={`w-3 h-3 text-[#666] group-hover:text-white transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -32,11 +32,11 @@ const UserDropdown = ({ user, isDropdownOpen, setIsDropdownOpen, handleLogout })
                 </svg>
             </button>
 
-            {/* Dropdown Menu */}
+            {}
             {isDropdownOpen && (
                 <div className="absolute right-0 mt-4 w-48 bg-[#0a0a0f] border border-white/10 shadow-2xl py-1 z-50 origin-top-right rounded-md overflow-hidden">
                     
-                    {/* Mobile Name Display */}
+                    {}
                     <div className="px-4 py-2 border-b border-white/5 lg:hidden">
                         <p className="text-xs font-bold text-white uppercase tracking-wider">{user.name}</p>
                     </div>

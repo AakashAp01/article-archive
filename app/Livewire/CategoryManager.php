@@ -10,19 +10,16 @@ class CategoryManager extends Component
 {
     use WithPagination;
 
-    // --- State Variables ---
     public $name;
     public $color_code = '#00ff00';
     public $status = true;
     public $search = '';
     public $categoryId = null;
     
-    // --- UI Controls ---
     public $isModalOpen = false;
     public $isDeleteModalOpen = false;
     public $categoryToDelete = null;
 
-    // --- Validation Rules ---
     protected function rules()
     {
         return [
@@ -32,7 +29,6 @@ class CategoryManager extends Component
         ];
     }
 
-    // --- Lifecycle Hooks ---
     public function updatingSearch()
     {
         $this->resetPage();
@@ -50,7 +46,6 @@ class CategoryManager extends Component
         ])->layout('layout.app');
     }
 
-    // --- Modal Logic ---
     public function openModal()
     {
         $this->resetValidation();
@@ -66,7 +61,6 @@ class CategoryManager extends Component
         $this->isDeleteModalOpen = false;
     }
 
-    // --- CRUD Actions ---
     public function store()
     {
         $this->validate();
@@ -102,7 +96,6 @@ class CategoryManager extends Component
         $this->isModalOpen = true;
     }
 
-    // --- Status Toggling ---
     public function toggleStatus($id)
     {
         $category = Category::findOrFail($id);
@@ -116,7 +109,6 @@ class CategoryManager extends Component
         ]);
     }
 
-    // --- Deletion ---
     public function confirmDelete($id)
     {
         $this->categoryToDelete = $id;

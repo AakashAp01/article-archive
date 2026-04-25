@@ -1,13 +1,11 @@
 @section('title', 'Overview')
 <main class="max-w-7xl mx-auto mt-32 px-6 pb-20 relative ">
 
-    {{-- Page Header --}}
     <x-page-header 
         title="Overview" 
         subtitle="Statistics and activity at a glance" 
     />
 
-    {{-- Clickable Cards --}}
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-10">
 
         <x-stat-card title="Users" :count="$stats['users']" :href="route('users.index')" color="blue" progress="70">
@@ -63,8 +61,6 @@
 
     </div>
 
-
-    {{-- GRAPH SECTION --}}
     <div class="bg-white/5 border border-white/10 p-6 rounded-sm relative mb-12">
         <h3 class="text-xs text-white uppercase tracking-widest mb-6 border-b border-white/10 pb-4">
             Activity Overview (Last 6 Months)
@@ -72,14 +68,13 @@
         <div class="relative h-[300px] w-full">
             <canvas id="dashboardChart"></canvas>
         </div>
-        {{-- Decor --}}
+        
         <div class="absolute top-0 left-0 w-2 h-2 border-l border-t border-accent"></div>
         <div class="absolute top-0 right-0 w-2 h-2 border-r border-t border-accent"></div>
         <div class="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-accent"></div>
         <div class="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-accent"></div>
     </div>
 
-    {{-- TOP 10 ARTICLES --}}
     <div class="bg-white/5 border border-white/10 p-6 rounded-sm relative">
         <h3
             class="text-xs text-white uppercase tracking-widest mb-6 border-b border-white/10 pb-4 flex justify-between items-center">
@@ -136,7 +131,6 @@
                             <td class="py-3 text-center transition-colors" role="cell">
                                 <div class="flex justify-center items-center gap-4">
 
-                                    {{-- Likes --}}
                                     <div class="flex items-center gap-1.5 text-[#666] group-hover:text-pink-500 transition-colors"
                                         title="Likes">
                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
@@ -148,7 +142,6 @@
                                         <span class="text-[10px] font-mono">{{ $article->likes_count ?? 0 }}</span>
                                     </div>
 
-                                    {{-- Comments --}}
                                     <div class="flex items-center gap-1.5 text-[#666] group-hover:text-blue-400 transition-colors"
                                         title="Comments">
                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
@@ -160,7 +153,6 @@
                                         <span class="text-[10px] font-mono">{{ $article->comments_count ?? 0 }}</span>
                                     </div>
 
-                                    {{-- Reports --}}
                                     <div class="flex items-center gap-1.5 text-[#666] group-hover:text-red-500 transition-colors"
                                         title="Reports">
                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
@@ -243,9 +235,9 @@
                             fill: true
                         },
                         {
-                            label: 'Reports', // Added Reports
+                            label: 'Reports', 
                             data: reportsData,
-                            borderColor: '#ef4444', // Red
+                            borderColor: '#ef4444', 
                             borderWidth: 2,
                             borderDash: [2, 2],
                             tension: 0.4,

@@ -6,20 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'AkashAp') | AkashAp.Dev</title>
     
-    {{-- SEO Meta Tags --}}
     <meta name="description" content="@yield('seo_description', 'A minimalist archive for insightful articles, creative thoughts, and deep dives into technology and design.')">
     <meta name="keywords" content="@yield('keywords', 'blog, technology, design, articles, archive, creative')">
     <meta name="author" content="AkashAp">
     <meta name="robots" content="index, follow">
 
-    {{-- Open Graph / Facebook --}}
     <meta property="og:type" content="@yield('og_type', 'website')">
     <meta property="og:url" content="@yield('og_url', url()->current())">
     <meta property="og:title" content="@yield('og_title', 'AkashAp | Minimalist Article Archive')">
     <meta property="og:description" content="@yield('og_description', 'Insightful articles and deep dives into technology and design.')">
     <meta property="og:image" content="@yield('og_image', asset('images/og-default.jpg'))">
 
-    {{-- Twitter --}}
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="@yield('og_url', url()->current())">
     <meta name="twitter:title" content="@yield('og_title', 'AkashAp | Minimalist Article Archive')">
@@ -53,7 +50,7 @@
     </script>
 
     <style>
-        /* Global Scrollbar */
+        
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -71,7 +68,6 @@
             background: #00ff88;
         }
 
-        /* Utility */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }

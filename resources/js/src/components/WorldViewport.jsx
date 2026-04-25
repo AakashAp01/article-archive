@@ -13,10 +13,10 @@ const WorldViewport = ({
         <div id="viewport" ref={viewportRef} className="w-full h-full relative overflow-hidden cursor-grab active:cursor-grabbing">
             <div id="world" ref={worldRef} className="absolute top-1/2 left-1/2 w-0 h-0">
 
-                {/* Grid Background */}
+                {}
                 <div className="grid-bg absolute -top-[50000px] -left-[50000px] w-[100000px] h-[100000px] opacity-10 pointer-events-none"></div>
 
-                {/* World Border */}
+                {}
                 <div className="absolute border-2 border-dashed border-red-500/30 pointer-events-none -z-10"
                     style={{
                         width: `${worldLimit * 2}px`,
@@ -29,7 +29,7 @@ const WorldViewport = ({
                     </div>
                 </div>
 
-                {/* Cards */}
+                {}
                 {visibleArticles.map(art => (
                     <Card
                         key={art.id}

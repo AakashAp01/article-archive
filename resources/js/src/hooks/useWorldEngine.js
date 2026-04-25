@@ -12,36 +12,29 @@ export const useWorldEngine = (viewportRef, worldRef, minimapIndicatorRef, coord
     targetX: 0, targetY: 0
   });
 
-  // Clamp within the dynamic world boundary
   const clamp = (val, limit) => Math.min(Math.max(val, -limit), limit);
 
   const syncApiState = useCallback(debounce((x, y) => {
       setCameraPosition({ x, y });
   }, 300), []);
 
-  // --- Animation Loop ---
   useEffect(() => {
     let animationFrameId;
     const animate = () => {
       const p = physics.current;
       
-      // Lerp
       p.currentX += (p.targetX - p.currentX) * 0.1;
       p.currentY += (p.targetY - p.currentY) * 0.1;
 
-      // 1. Update World
       if (worldRef.current) {
         worldRef.current.style.transform = `translate(${p.currentX}px, ${p.currentY}px)`;
       }
 
-      // 2. Update Minimap Indicator (The Fix)
       if (minimapIndicatorRef.current && worldLimit > 0) {
-        // Calculate Percentage based on Dynamic Limit
-        // If World X is -Limit (Left), Indicator should be 100% (Right)
+        
         const pctX = (p.currentX / worldLimit) * 50; 
         const pctY = (p.currentY / worldLimit) * 50;
 
-        // Invert logic: Dragging Left (Negative X) means viewing Right area
         const indX = 50 - pctX;
         const indY = 50 - pctY;
         
@@ -50,7 +43,6 @@ export const useWorldEngine = (viewportRef, worldRef, minimapIndicatorRef, coord
         minimapIndicatorRef.current.style.transform = `translate(-50%, -50%)`;
       }
 
-      // 3. Update Text
       if (coordRef && coordRef.current) {
         coordRef.current.innerText = `X: ${Math.round(-p.currentX)} | Y: ${Math.round(-p.currentY)}`;
       }
@@ -59,23 +51,20 @@ export const useWorldEngine = (viewportRef, worldRef, minimapIndicatorRef, coord
     };
     animate();
     return () => cancelAnimationFrame(animationFrameId);
-  }, [worldLimit]); // Re-bind if limit changes
+  }, [worldLimit]); 
 
-  // --- Event Listeners ---
   useEffect(() => {
     const view = viewportRef.current;
     if (!view) return;
 
     const onMouseDown = (e) => {
-      // 1. If clicking an input/button/a, allow default behavior
+      
       if (e.target.closest('input, button, a')) return;
       
-      // 2. Clear focus from search or other inputs to restore wheel event bubbling
       if (document.activeElement instanceof HTMLElement) {
           document.activeElement.blur();
       }
 
-      // 3. Dismiss active article view if clicking the background
       if (activeArticle) {
           setActiveArticle(null);
       }
@@ -106,13 +95,9 @@ export const useWorldEngine = (viewportRef, worldRef, minimapIndicatorRef, coord
     };
 
     const onWheel = (e) => {
-      // Only block scroll if a detailed view is actually visible/active in a way that needs it
-      // For now, let's allow scrolling even if activeArticle is set, 
-      // as it might just mean 'highlighted' in this context.
-      // if (activeArticle) return; 
-
+      
       e.preventDefault();
-      const rawX = physics.current.targetX - (e.deltaX * 1.5); // Slightly faster
+      const rawX = physics.current.targetX - (e.deltaX * 1.5); 
       const rawY = physics.current.targetY - (e.deltaY * 1.5);
       
       physics.current.targetX = clamp(rawX, worldLimit);
@@ -134,7 +119,6 @@ export const useWorldEngine = (viewportRef, worldRef, minimapIndicatorRef, coord
     };
   }, [activeArticle, syncApiState, worldLimit]);
 
-  // --- Helpers ---
   const navigateToCard = (cardData) => {
     const cardWidth = 320; 
     const cardHeight = 420;
@@ -149,16 +133,13 @@ export const useWorldEngine = (viewportRef, worldRef, minimapIndicatorRef, coord
   };
 
   const jumpToMinimap = (e, rect) => {
-     // Calculate click percentage (-0.5 to 0.5)
+     
      const clickX = e.clientX - rect.left;
      const clickY = e.clientY - rect.top;
      
      const pctX = (clickX / rect.width) - 0.5;
      const pctY = (clickY / rect.height) - 0.5;
 
-     // Convert percentage to World Coordinates
-     // If I click Right (0.5), I want camera to move Right.
-     // Moving camera Right means World must move Left (negative).
      const targetX = -(pctX * (worldLimit * 2));
      const targetY = -(pctY * (worldLimit * 2));
 

@@ -8,7 +8,7 @@ use Illuminate\Validation\ValidationException;
 
 class NewsletterController extends Controller
 {
-    // 1. Subscribe a new user
+    
     public function subscribe(Request $request)
     {
         $request->validate([
@@ -34,7 +34,6 @@ class NewsletterController extends Controller
         ]);
     }
 
-    // 2. Show the confirmation page
     public function showUnsubscribeForm($email)
     {
         try {
@@ -61,7 +60,6 @@ class NewsletterController extends Controller
         }
     }
 
-    // 3. Process the unsubscription
     public function processUnsubscribe(Request $request)
     {
         $request->validate([

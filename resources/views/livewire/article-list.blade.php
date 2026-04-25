@@ -1,7 +1,6 @@
 @section('title', 'Articles')
 <main class="max-w-7xl mx-auto mt-32 px-6 pb-20 relative ">
 
-    {{-- Header Section --}}
     <x-page-header 
         title="Articles" 
         subtitle="Manage your blog posts and published content" 
@@ -10,7 +9,7 @@
     <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
         
         <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
-            {{-- Category Filter --}}
+            
             <div class="relative group min-w-[150px]">
                 <select wire:model.live="categoryFilter"
                     class="w-full appearance-none bg-black/20 border border-white/10 px-4 py-3 text-xs text-white focus:outline-none focus:border-accent transition-all font-display uppercase tracking-wider cursor-pointer hover:bg-black/40">
@@ -24,7 +23,6 @@
                 </div>
             </div>
 
-            {{-- Status Filter --}}
             <div class="relative group min-w-[150px]">
                 <select wire:model.live="statusFilter"
                     class="w-full appearance-none bg-black/20 border border-white/10 px-4 py-3 text-xs text-white focus:outline-none focus:border-accent transition-all font-display uppercase tracking-wider cursor-pointer hover:bg-black/40">
@@ -37,7 +35,6 @@
                 </div>
             </div>
 
-            {{-- Search Bar --}}
             <div class="relative w-full md:w-64 group">
                 <input wire:model.live.debounce.300ms="search" type="text"
                     class="w-full bg-black/20 border border-white/10 px-10 py-3 text-xs text-white focus:outline-none focus:border-accent transition-all placeholder-white/20 font-display uppercase tracking-wider"
@@ -48,7 +45,6 @@
             </div>
         </div>
 
-        {{-- Initialize Button --}}
         <x-button variant="accent-outline" class="w-full md:w-auto">
             <a href="{{ route('article.create') }}" class="w-full h-full flex items-center justify-center gap-3">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" /></svg>
@@ -57,9 +53,8 @@
         </x-button>
     </div>
 
-    {{-- Table --}}
     <div class="space-y-4">
-        {{-- Headers --}}
+        
         <div
             class="hidden md:grid grid-cols-12 gap-4 text-[10px] uppercase tracking-widest text-[#666] px-6 pb-2 font-display">
             <div class="col-span-4">Article Data</div>
@@ -74,10 +69,9 @@
                 class="group relative bg-white/[0.02] border border-white/5 hover:border-accent/50 transition-all duration-300 p-6 md:p-4 rounded-sm">
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
 
-                    {{-- 1. Thumbnail & Title --}}
                     <div class="col-span-1 md:col-span-4">
                         <div class="flex items-center gap-4">
-                            {{-- Thumb --}}
+                            
                             <div class="w-20 h-10 bg-black/50 border border-white/10 overflow-hidden shrink-0 relative">
                                 @if ($article->thumbnail)
                                     <img src="{{ $article->thumbnail }}"
@@ -93,7 +87,7 @@
                                         </svg>
                                     </div>
                                 @endif
-                                {{-- Draft Overlay --}}
+                                
                                 @if ($article->status === 'draft')
                                     <div class="absolute inset-0 bg-black/60 flex items-center justify-center">
                                         <span
@@ -102,7 +96,6 @@
                                 @endif
                             </div>
 
-                            {{-- Text --}}
                             <div class="min-w-0">
                                 <h3
                                     class="text-sm font-medium text-white truncate group-hover:text-accent transition-colors">
@@ -120,7 +113,6 @@
                         </div>
                     </div>
 
-                    {{-- 2. Category Badge --}}
                     <div class="col-span-1 md:col-span-2 flex md:justify-center">
                         @if ($article->category)
                             <span class="px-2 py-1 text-[9px] uppercase tracking-wider border"
@@ -132,10 +124,8 @@
                         @endif
                     </div>
 
-                    {{-- 3. Engagement --}}
                     <div class="col-span-1 md:col-span-2 flex md:justify-center items-center gap-4">
 
-                        {{-- Likes --}}
                         <div class="flex items-center gap-1.5 text-[#666] group-hover:text-pink-500 transition-colors"
                             title="Likes">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -147,7 +137,6 @@
                             <span class="text-xs font-mono">{{ $article->likes_count ?? 0 }}</span>
                         </div>
 
-                        {{-- Comments --}}
                         <div class="flex items-center gap-1.5 text-[#666] group-hover:text-blue-400 transition-colors"
                             title="Comments">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -159,7 +148,6 @@
                             <span class="text-xs font-mono">{{ $article->comments_count ?? 0 }}</span>
                         </div>
 
-                        {{-- Reports --}}
                         <div class="flex items-center gap-1.5 text-[#666] group-hover:text-red-500 transition-colors"
                             title="Reports">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -171,8 +159,6 @@
 
                     </div>
 
-
-                    {{-- 4. Status Toggle --}}
                     <div class="col-span-1 md:col-span-2 flex md:justify-center">
                         <button wire:click="toggleStatus({{ $article->id }})"
                             class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none 
@@ -185,11 +171,9 @@
                         </button>
                     </div>
 
-                    {{-- 5. Actions --}}
                     <div
                         class="col-span-1 md:col-span-2 flex items-center justify-start md:justify-end gap-2 mt-4 md:mt-0 pt-4 md:pt-0 border-t md:border-t-0 border-white/5">
 
-                        {{-- Edit --}}
                         <a href="{{ route('article.edit', $article->id) }}"
                             class="w-8 h-8 flex items-center justify-center border border-white/10 bg-black/20 text-[#888] hover:border-white hover:text-white hover:bg-white/5 transition-all">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -198,7 +182,6 @@
                             </svg>
                         </a>
 
-                        {{-- View --}}
                         <a href="{{ route('article.show', $article->slug) }}"
                             class="w-8 h-8 flex items-center justify-center border border-white/10 bg-black/20 text-[#888] hover:border-white hover:text-white hover:bg-white/5 transition-all"
                             title="View Article">
@@ -209,7 +192,6 @@
                             </svg>
                         </a>
 
-                        {{-- Delete --}}
                         <button wire:click="confirmDelete({{ $article->id }})"
                             class="w-8 h-8 flex items-center justify-center border border-red-500/20 bg-red-500/5 text-red-400 hover:border-red-500 hover:bg-red-500 hover:text-white transition-all">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -224,7 +206,6 @@
 
                 </div>
 
-                {{-- Hover Decor --}}
                 <div class="absolute top-0 left-0 w-2 h-2 border-l border-t border-white/20 group-hover:border-accent">
                 </div>
                 <div
@@ -245,7 +226,6 @@
         </div>
     </div>
 
-    {{-- Delete Modal --}}
     @if ($isDeleteModalOpen)
         <x-modal id="deleteArticleModal" 
             title="Confirm Purge" 

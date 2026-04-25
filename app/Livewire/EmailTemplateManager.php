@@ -16,11 +16,9 @@ class EmailTemplateManager extends Component
     public $search = '';
     public $perPage = 10;
 
-    // Form Fields
     public $template_id;
     public $name, $key, $subject, $content, $theme_color = '#00ff88';
 
-    // UI States
     public $showTestModal = false;
     public $testEmail = '';
     public $testTemplateId = null;
@@ -132,7 +130,7 @@ class EmailTemplateManager extends Component
         }
 
         try {
-            // Dummy Data for Placeholders
+            
             $dummyData = [
                 'name' => 'Test Subject',
                 'role' => 'Tester',
@@ -161,7 +159,7 @@ class EmailTemplateManager extends Component
 
     public function toggleStatus($id)
     {
-        // Removed as column does not exist
+        
     }
 
     public function cancel()

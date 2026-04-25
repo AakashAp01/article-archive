@@ -1,21 +1,18 @@
 <div id="confirmModal" class="fixed inset-0 z-[100] hidden">
-    {{-- Backdrop with Blur --}}
+    
     <div class="absolute inset-0 bg-black/90 backdrop-blur-sm transition-opacity opacity-0" id="confirmBackdrop"></div>
 
-    {{-- Modal Content --}}
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-1 pointer-events-none opacity-0 transition-all duration-300 scale-95"
         id="confirmContent">
 
-        {{-- Inner Card --}}
         <div class="bg-[#0a0a0f] border border-red-500/30 p-8 pointer-events-auto relative overflow-hidden">
 
-            {{-- Technical Decor Lines --}}
             <div class="absolute top-0 left-0 w-2 h-2 border-l border-t border-red-500"></div>
             <div class="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-red-500"></div>
             <div class="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-l from-red-500/20 to-transparent"></div>
 
             <div class="text-center">
-                {{-- Warning Icon --}}
+                
                 <div
                     class="mx-auto w-16 h-16 border border-red-500/20 rounded-full flex items-center justify-center mb-6 bg-red-500/5 relative">
                     <div class="absolute inset-0 rounded-full border border-red-500/20 animate-ping opacity-20"></div>
@@ -55,7 +52,6 @@
 <script>
     let formToSubmit = null;
 
-    // Open Modal and store the form reference
     function openConfirmModal(formElement) {
         formToSubmit = formElement;
         const modal = document.getElementById('confirmModal');
@@ -64,14 +60,12 @@
 
         modal.classList.remove('hidden');
 
-        // Small delay for transition
         setTimeout(() => {
             backdrop.classList.remove('opacity-0');
             content.classList.remove('opacity-0', 'scale-95');
         }, 10);
     }
 
-    // Close Modal
     function closeConfirmModal() {
         const modal = document.getElementById('confirmModal');
         const backdrop = document.getElementById('confirmBackdrop');
@@ -86,10 +80,9 @@
         }, 300);
     }
 
-    // Submit the stored form
     function confirmAction() {
         if (formToSubmit) {
-            // Optional: Change button text to indicate processing
+            
             const btn = document.querySelector('#confirmContent button:last-child');
             btn.innerText = 'Deleting...';
 

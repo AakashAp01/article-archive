@@ -9,7 +9,6 @@
 
         <div class="flex flex-wrap justify-center gap-3">
 
-            {{-- Like Button --}}
             <button wire:click="toggleLike"
                 class="group relative flex items-center gap-2 px-4 py-2  border border-white/10 hover:border-red-500/50 hover:bg-red-500/5 transition-all">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="{{ $isLiked ? 'currentColor' : 'none' }}"
@@ -20,7 +19,6 @@
                 <span class="font-display text-xs uppercase tracking-wider text-gray-300">{{ $isLiked ? 'Liked' : 'Like' }}</span>
             </button>
 
-            {{-- Save Button --}}
             <button wire:click="toggleSave"
                 class="group relative flex items-center gap-2 px-4 py-2  border border-white/10 hover:border-blue-500/50 hover:bg-blue-500/5 transition-all">
                 <svg width="14" height="14" viewBox="0 0 24 24"
@@ -31,7 +29,6 @@
                 <span class="font-display text-xs uppercase tracking-wider text-gray-300">{{ $isSaved ? 'Saved' : 'Save' }}</span>
             </button>
 
-            {{-- Discuss Button --}}
             <button
                 @click="commentsOpen = !commentsOpen; if(commentsOpen) $nextTick(() => $el.scrollIntoView({ behavior: 'smooth' }))"
                 class="group relative flex items-center gap-2 px-4 py-2  border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all">
@@ -47,7 +44,6 @@
                 @endif
             </button>
 
-            {{-- Share Button --}}
             <button onclick="nativeShare()"
                 class="group relative flex items-center gap-2 px-4 py-2  border border-white/10 hover:border-[var(--accent)] hover:bg-white/5 transition-all">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -61,7 +57,6 @@
                 <span class="font-display text-xs uppercase tracking-wider text-gray-300">Share</span>
             </button>
 
-            {{-- Report Button --}}
             <button @click="reportModalOpen = true"
                 class="group relative flex items-center gap-2 px-4 py-2  border border-white/10 hover:border-yellow-500/50 hover:bg-yellow-500/5 transition-all">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -76,26 +71,23 @@
         </div>
     </div>
 </div>
-    {{-- 2. REPORT MODAL --}}
+    
     <div x-show="reportModalOpen" style="display: none;"
         class="fixed inset-0 z-[100] flex items-center justify-center p-4"
         x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
 
-        {{-- Backdrop --}}
         <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" @click="reportModalOpen = false"></div>
 
-        {{-- Modal Content --}}
         <div class="relative w-full max-w-md bg-[#0a0a0f] p-8 shadow-2xl overflow-hidden"
             @click.stop>
 
-            {{-- Technical Decor Lines --}}
             <div class="absolute top-0 left-0 w-2 h-2 border-l border-t border-yellow-500"></div>
             <div class="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-yellow-500"></div>
 
             <div class="text-center relative z-10">
-                {{-- Warning Icon (Animated) --}}
+                
                 <div
                     class="mx-auto w-16 h-16 border border-yellow-500/20  flex items-center justify-center mb-6 bg-yellow-500/5 relative">
                     <div class="absolute inset-0  border border-yellow-500/20 animate-ping opacity-20">
@@ -115,7 +107,6 @@
                 <div class="mb-8">
                         Please let us know why you are reporting this article.
 
-                    {{-- Styled Select Input --}}
                     <div class="relative group text-left">
                         <select wire:model="reportReason"
                             class="w-full bg-[#050505] border border-white/10 text-sm text-gray-300 p-3 pr-10 focus:border-yellow-500/50 focus:outline-none focus:bg-white/[0.02] transition-colors appearance-none font-light cursor-pointer">
@@ -126,7 +117,6 @@
                             <option class="bg-[#050505]" value="other">Other Issue</option>
                         </select>
 
-                        {{-- Custom Chevron --}}
                         <div
                             class="absolute right-3 top-3.5 pointer-events-none text-[#666] group-hover:text-white transition-colors">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -142,7 +132,6 @@
                     @enderror
                 </div>
 
-                {{-- Action Buttons --}}
                 <div class="flex gap-4">
                     <button type="button" @click="reportModalOpen = false"
                         class="flex-1 py-3 border border-white/10 text-[#666] text-xs font-[Courier] uppercase tracking-widest hover:bg-white/5 hover:text-white transition-colors">
@@ -159,10 +148,8 @@
         </div>
     </div>
 
-    {{-- 3. COMMENT SECTION --}}
     <div x-show="commentsOpen" x-transition.duration.500ms class="mt-5 pt-5 border-t border-white/10">
 
-        {{-- Main Comment Input (Root Level) --}}
         @auth
             <div class="mb-12 bg-white/[0.02] p-6  border border-white/5">
                 <label class="text-sm font-semibold text-[#666] tracking-widest mb-4 block">Leave a
@@ -190,10 +177,9 @@
             </div>
         @endauth
 
-        {{-- RECURSIVE LIST START --}}
         <div class="space-y-5">
             @forelse($comments as $comment)
-                {{-- We pass 'replyingTo' so the child knows when to open its form --}}
+                
                 <x-comment-item :comment="$comment" :replyingTo="$replyingTo" />
             @empty
                 <p class="text-[#666] italic text-sm text-center">No comments yet. Be the first to share your thoughts.
@@ -210,7 +196,6 @@
             });
         });
 
-        // Native share function (kept from previous code)
         function nativeShare() {
             if (navigator.share) {
                 navigator.share({

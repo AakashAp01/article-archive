@@ -2,7 +2,7 @@
 @push('styles')
     <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     <style>
-        /* EasyMDE Base Overrides */
+        
         .EasyMDEContainer {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -26,7 +26,6 @@
             color: #00ff88 !important;
         }
 
-        /* CodeMirror (The Text Area) */
         .CodeMirror {
             background: #0a0a0f !important;
             color: #e0e0e0 !important;
@@ -39,7 +38,6 @@
             border-left: 2px solid #00ff88 !important;
         }
 
-        /* Preview Mode */
         .editor-preview {
             background: #0a0a0f !important;
             color: #a0a0a0 !important;
@@ -64,7 +62,6 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
         }
 
-        /* === CRITICAL FIX FOR FULLSCREEN === */
         .EasyMDEContainer.fullscreen {
             z-index: 9999 !important;
             position: fixed !important;
@@ -82,10 +79,8 @@
         />
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
-            {{-- LEFT COLUMN: Content --}}
             <div class="lg:col-span-2 space-y-8">
 
-                {{-- Title --}}
                 <div class="group">
                     <input wire:model.live.debounce.500ms="title" type="text" placeholder="Article Title..."
                         class="w-full bg-transparent text-3xl md:text-4xl text-white font-light placeholder-[#333] outline-none border-b border-transparent focus:border-accent/50 transition-all pb-4">
@@ -94,7 +89,6 @@
                     @enderror
                 </div>
 
-                {{-- Excerpt --}}
                 <div>
                     <label class="block text-xs text-[#666] mb-2 uppercase">Excerpt</label>
                     <textarea wire:model.blur="excerpt" rows="3"
@@ -102,7 +96,6 @@
                         placeholder="Brief abstract..."></textarea>
                 </div>
 
-                {{-- Markdown Editor (Alpine.js Wrapper) --}}
                 <div wire:ignore>
                     <label class="block text-xs text-[#666] mb-2 uppercase">Main Content</label>
                     <textarea id="markdown-editor"></textarea>
@@ -112,21 +105,19 @@
                 @enderror
             </div>
 
-            {{-- RIGHT COLUMN: Settings --}}
             <div class="space-y-6">
 
-                {{-- 1. Thumbnail Upload --}}
                 <div class="bg-white/5 border border-white/10 p-6 rounded-sm">
                     <h3 class="text-xs text-accent uppercase tracking-widest mb-4 border-b border-white/10 pb-2">Cover Image</h3>
 
                     <div class="space-y-4">
-                        {{-- Preview Area --}}
+                        
                         <div
                             class="relative w-full aspect-video bg-black/40 border border-dashed border-white/20 flex items-center justify-center overflow-hidden">
                             @if ($thumbnail)
                                 <img src="{{ $thumbnail->temporaryUrl() }}" class="w-full h-full object-cover">
                             @elseif($existingThumbnail)
-                                <img src="{{ $existingThumbnail }}"
+                                <img src="{{ asset('storage/' . $existingThumbnail) }}"
                                     class="w-full h-full object-cover">
                             @else
                                 <div class="text-center text-[#444]">
@@ -140,14 +131,12 @@
                                 </div>
                             @endif
 
-                            {{-- Loading Spinner --}}
                             <div wire:loading wire:target="thumbnail"
                                 class="absolute inset-0 bg-black/80 flex items-center justify-center">
                                 <span class="text-accent text-xs animate-pulse">UPLOADING...</span>
                             </div>
                         </div>
 
-                        {{-- File Input --}}
                         <input type="file" wire:model="thumbnail" id="thumbnail" class="hidden">
                         <label for="thumbnail"
                             class="block w-full text-center border border-white/10 py-2 text-[10px] uppercase cursor-pointer hover:bg-white/5 hover:border-accent hover:text-accent transition-all">
@@ -160,7 +149,6 @@
                     </div>
                 </div>
 
-                {{-- 2. SEO Meta Data --}}
                 <div class="bg-white/5 border border-white/10 p-6 rounded-sm">
                     <h3 class="text-xs text-accent uppercase tracking-widest mb-4 border-b border-white/10 pb-2">Search Settings (SEO)</h3>
 
@@ -180,7 +168,6 @@
                     </div>
                 </div>
 
-                {{-- 3. Grid Position --}}
                 <div class="bg-white/5 border border-white/10 p-6 rounded-sm">
                     <h3 class="text-xs text-accent uppercase tracking-widest mb-4 border-b border-white/10 pb-2">Map Position</h3>
                     <div class="grid grid-cols-2 gap-4">
@@ -197,12 +184,10 @@
                     </div>
                 </div>
 
-                {{-- 4. Taxonomy --}}
                 <div class="bg-white/5 border border-white/10 p-6 rounded-sm space-y-4">
                     <h3 class="text-xs text-accent uppercase tracking-widest mb-4 border-b border-white/10 pb-2">
                         Taxonomy</h3>
 
-                    {{-- Category Datalist --}}
                     <div>
                         <label class="text-[10px] uppercase text-[#666] block mb-2">Category</label>
                         <input wire:model="category_name" list="category_list" type="text"
@@ -218,7 +203,6 @@
                         @enderror
                     </div>
 
-                    {{-- Tags --}}
                     <div>
                         <label class="text-[10px] uppercase text-[#666] block mb-2">Tags</label>
                         <input wire:model="tags" type="text" placeholder="LARAVEL, UI, DEVLOG"
@@ -226,14 +210,12 @@
                         <p class="text-[9px] text-[#444] mt-1">> Separate with commas</p>
                     </div>
 
-                    {{-- Date --}}
                     <div>
                         <label class="text-[10px] uppercase text-[#666] block mb-2">Date</label>
                         <input wire:model="date" type="date"
                             class="w-full bg-black/40 border border-white/10 p-2 text-white text-xs focus:border-accent outline-none invert-calendar">
                     </div>
 
-                    {{-- Slug (Auto) --}}
                     <div>
                         <label class="text-[10px] uppercase text-[#666] block mb-2">Slug</label>
                         <input wire:model="slug" type="text" readonly
@@ -264,7 +246,6 @@
             <span class="text-[10px] text-accent uppercase tracking-[0.2em]">Live Editor Enabled</span>
         </div>
 
-        {{-- Publish Button triggers Livewire `store` --}}
         <button wire:click="store" wire:loading.attr="disabled"
             class="group bg-accent text-sm hover:bg-[#00cc6a] text-black px-6 py-2 flex items-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
             <span wire:loading.remove class="text-xs font-bold uppercase tracking-wider">Publish Post</span>
@@ -282,7 +263,7 @@
     <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
     <script>
         document.addEventListener('livewire:initialized', () => {
-            // Initialize EasyMDE
+            
             const easyMDE = new EasyMDE({
                 element: document.getElementById('markdown-editor'),
                 spellChecker: false,
@@ -295,12 +276,10 @@
                 status: false,
             });
 
-            // Sync EasyMDE -> Livewire
             easyMDE.codemirror.on('change', () => {
                 @this.set('content', easyMDE.value());
             });
 
-            // (Optional) Sync Livewire -> EasyMDE if content changes externally
             Livewire.hook('morph.updated', ({
                 component,
                 el
@@ -310,7 +289,6 @@
                 }
             });
 
-            // Load initial content
             easyMDE.value(@this.get('content'));
         });
     </script>
@@ -320,7 +298,7 @@
     <script>
         Livewire.on('show-toast', (event) => {
             if (window.showToast) {
-                // Accessing index 0 of the event array, as required by the backend fix
+                
                 window.showToast(event[0].type, event[0].title, event[0].message);
             } else {
                 console.log(event[0].message);

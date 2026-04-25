@@ -1,7 +1,6 @@
 @section('title', 'My Collection')
 <main class="max-w-7xl mx-auto mt-32 px-6 pb-20 relative">
     
-    {{-- Header Section --}}
     <x-page-header 
         title="Saved Articles" 
         subtitle="Your personal collection of bookmarked stories" 
@@ -33,7 +32,6 @@
         </div>
     </div>
 
-    {{-- Grid Layout --}}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @forelse($articles as $article)
             @php $themeColor = $article->category->color_code ?? '#ffffff'; @endphp
@@ -42,7 +40,6 @@
                  style="--card-theme: {{ $themeColor }}"
                  class="group relative bg-[#0a0a0f] border border-white/10 hover:border-[var(--card-theme)] transition-all duration-500 flex flex-col h-full rounded-sm overflow-hidden">
                 
-                {{-- Image --}}
                 <div class="relative w-full aspect-video overflow-hidden border-b border-white/5">
                     @if($article->thumbnail)
                         <img src="{{ $article->thumbnail }}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 grayscale group-hover:grayscale-0">
@@ -60,7 +57,6 @@
                     @endif
                 </div>
 
-                {{-- Content Body --}}
                 <div class="p-6 flex-1 flex flex-col relative">
                     <h3 class="text-lg font-light text-white leading-tight mb-3 transition-colors duration-300 group-hover:text-[var(--card-theme)]">
                         <a href="{{ route('article.show', $article->slug) }}">{{ Str::limit($article->title, 55) }}</a>
@@ -76,7 +72,6 @@
                             <a href="{{ route('article.show', $article->slug) }}" class="text-xs text-white hover:text-[var(--card-theme)] uppercase tracking-wider transition-colors font-bold">Read</a>
                             <div class="h-3 w-px bg-white/10"></div>
                             
-                            {{-- Remove Button Trigger --}}
                             <button wire:click="confirmRemove({{ $article->id }})" 
                                     class="group/btn text-xs text-[#666] hover:text-red-500 uppercase tracking-wider transition-colors flex items-center gap-1">
                                 
@@ -86,7 +81,6 @@
                     </div>
                 </div>
 
-                {{-- Decor --}}
                 <div class="absolute top-0 left-0 w-2 h-2 border-l border-t border-white/10 group-hover:border-[var(--card-theme)] transition-colors duration-300"></div>
                 <div class="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-white/10 group-hover:border-[var(--card-theme)] transition-colors duration-300"></div>
             </div>
@@ -112,7 +106,6 @@
         {{ $articles->links() }}
     </div>
 
-    {{-- MODAL: Remove Confirmation --}}
     @if ($isDeleteModalOpen)
         <x-modal id="removeSavedModal" 
             title="Confirm Removal" 

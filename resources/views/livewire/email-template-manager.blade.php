@@ -1,7 +1,7 @@
 @push('styles')
     <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     <style>
-        /* EasyMDE Base Overrides */
+        
         .EasyMDEContainer { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 2px; }
         .editor-toolbar { background: rgba(0, 0, 0, 0.3) !important; border-color: rgba(255, 255, 255, 0.1) !important; color: #fff !important; }
         .editor-toolbar button { color: #888 !important; }
@@ -19,17 +19,15 @@
     </style>
 @endpush
 
-{{-- Load Script --}}
 @push('scripts')
     <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
     <script>
         document.addEventListener('livewire:initialized', () => {
-            // RELOAD HANDLER FOR EDITOR FIX
+            
             Livewire.on('reload-page', () => {
                 setTimeout(() => { window.location.reload(); }, 1500);
             });
 
-            // EDITOR INIT
             let easyMDE = null;
             const initEditor = (initialContent = '') => {
                 const element = document.getElementById('email-markdown-editor');
@@ -52,12 +50,10 @@
     </script>
 @endpush
 
-{{-- Removed root style variable to fix global color bleeding --}}
 <div class="min-h-screen w-full">
     
     <main class="max-w-7xl mx-auto mt-32 px-6 pb-20 relative">
 
-        {{-- ================= LIST VIEW ================= --}}
         @if(!$showForm)
             
             <x-page-header 
@@ -66,7 +62,7 @@
     />
 
             <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
-                {{-- Search Bar --}}
+                
                 <div class="relative w-full md:w-64 group">
                     <input wire:model.live.debounce.300ms="search" type="text"
                         class="w-full bg-black/20 border border-white/10 px-10 py-3 text-xs text-white focus:outline-none focus:border-accent transition-all placeholder-white/20 font-display uppercase tracking-wider"
@@ -76,17 +72,14 @@
                     </div>
                 </div>
 
-                {{-- Initialize Button --}}
                 <x-button wire:click="create" variant="accent-outline" class="w-full md:w-auto">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mr-3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                     Forge New Script
                 </x-button>
             </div>
 
-            {{-- Data Table / Grid --}}
             <div class="space-y-4" role="table" aria-label="Email Templates">
 
-                {{-- Grid Headers (Desktop) --}}
                 <div class="hidden md:grid grid-cols-12 gap-4 text-[10px] uppercase tracking-widest text-[#666] px-6 pb-2 font-display">
                     <div class="col-span-1">Ref</div>
                     <div class="col-span-4">Blueprint Identifier</div>
@@ -94,49 +87,40 @@
                     <div class="col-span-3 text-right">Actions</div>
                 </div>
 
-                {{-- Rows --}}
                 @forelse($templates as $template)
                     <div class="group relative bg-white/[0.02] border border-white/5 hover:border-accent/50 transition-all duration-300 p-6 md:p-4 rounded-sm" role="row">
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
 
-                            {{-- ID --}}
                             <div class="col-span-1 text-[#666] font-display text-xs" role="cell">
                                 <span class="md:hidden mr-2 uppercase tracking-widest text-[10px]">ID:</span>
                                 #{{ str_pad($template->id, 3, '0', STR_PAD_LEFT) }}
                             </div>
 
-                            {{-- Name --}}
                             <div class="col-span-4" role="cell">
                                 <h3 class="text-white text-base group-hover:text-accent transition-colors font-light select-all uppercase tracking-tight">{{ $template->name }}</h3>
                             </div>
 
-                            {{-- Subject --}}
                             <div class="col-span-5 text-xs text-[#888] font-mono truncate" role="cell">
                                 <span class="md:hidden mr-2 uppercase tracking-widest text-[10px] block mb-1">Subject:</span>
                                 {{ $template->subject }}
                             </div>
 
-                            {{-- Actions --}}
                             <div class="col-span-2 flex items-center justify-start md:justify-end gap-2 mt-4 md:mt-0 pt-4 md:pt-0 border-t md:border-t-0 border-white/5" role="cell">
                                 
-                                {{-- Test Signal --}}
                                 <x-button wire:click="openTestModal({{ $template->id }})" variant="outline" class="!w-8 !h-8 !p-0 border-blue-500/20 bg-blue-500/5 text-blue-400 hover:border-blue-500 hover:bg-blue-500 hover:text-white" title="Test Template">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
                                 </x-button>
 
-                                {{-- Edit --}}
                                 <x-button wire:click="edit({{ $template->id }})" variant="outline" class="!w-8 !h-8 !p-0" title="Edit Template">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" /></svg>
                                 </x-button>
 
-                                {{-- Delete --}}
                                 <x-button wire:click="confirmDelete({{ $template->id }})" variant="danger" class="!w-8 !h-8 !p-0 !bg-red-500/5 !text-red-400 hover:!bg-red-500 hover:!text-white" title="Delete Template">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /></svg>
                                 </x-button>
                             </div>
                         </div>
 
-                        {{-- Hover Decor --}}
                         <div class="absolute top-0 left-0 w-2 h-2 border-l border-t border-white/20 group-hover:border-accent"></div>
                         <div class="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-white/20 group-hover:border-accent"></div>
                     </div>
@@ -153,7 +137,7 @@
             </div>
 
         @else 
-            {{-- ================= EDITOR VIEW ================= --}}
+            
             <div class="flex items-center justify-between mb-8 border-b border-white/10 pb-6">
                 <div>
                     <h1 class="text-2xl text-white font-light">
@@ -164,7 +148,7 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                {{-- LEFT COLUMN: Content --}}
+                
                 <div class="lg:col-span-2 space-y-8">
                     <div class="group">
                         <label class="block text-xs text-[#666] mb-2 uppercase tracking-widest font-display">Internal Name</label>
@@ -190,9 +174,8 @@
                     @error('content') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
 
-                {{-- RIGHT COLUMN: Settings --}}
                 <div class="space-y-6">
-                    {{-- Theme Color --}}
+                    
                     <div class="bg-white/5 border border-white/10 p-6 rounded-sm">
                         <h3 class="text-xs text-accent uppercase tracking-widest mb-4 border-b border-white/10 pb-2 font-display">Visual ID</h3>
                         <label class="text-[10px] uppercase text-[#666] block mb-2">Theme Color</label>
@@ -202,7 +185,6 @@
                         </div>
                     </div>
 
-                    {{-- System Key --}}
                     <div class="bg-white/5 border border-white/10 p-6 rounded-sm">
                         <h3 class="text-xs text-accent uppercase tracking-widest mb-4 border-b border-white/10 pb-2 font-display">System Identification</h3>
                         <label class="text-[10px] uppercase text-[#666] block mb-1">Unique Key</label>
@@ -213,7 +195,6 @@
                         @error('key') <span class="text-red-500 text-[10px]">{{ $message }}</span> @enderror
                     </div>
 
-                    {{-- Variables --}}
                     <div class="bg-white/5 border border-white/10 p-6 rounded-sm">
                         <h3 class="text-xs text-accent uppercase tracking-widest mb-4 border-b border-white/10 pb-2 font-display">Variables</h3>
                         <code class="block bg-black/30 p-2 border border-white/5 font-mono text-xs" style="color: {{ $theme_color }};">Hello @{{ name }}</code>
@@ -221,7 +202,6 @@
                 </div>
             </div>
 
-            {{-- Editor Footer --}}
             <header class="fixed bottom-0 left-0 w-full bg-[#0a0a0f]/95 border-b border-white/10 h-16 flex items-center justify-between px-6 md:px-8 backdrop-blur-md z-40">
                 <button wire:click="cancel" class="group flex items-center gap-3 text-[#666] hover:text-white transition-colors">
                     <div class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-accent group-hover:bg-accent/10 transition-all">
@@ -244,7 +224,6 @@
             </header>
             @endif
 
-    {{-- Delete Modal --}}
     @if ($isDeleteModalOpen)
         <x-modal id="deleteTemplateModal" 
             title="Confirm Deletion" 
@@ -262,7 +241,6 @@
         </x-modal>
     @endif
 
-        {{-- ================= TEST EMAIL MODAL ================= --}}
         @if($showTestModal)
             <x-modal id="testEmailModal" 
                 title="Test Transmission" 

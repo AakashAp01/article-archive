@@ -4,18 +4,15 @@
 @section('content')
 <div class="bg-[#0a0a0f] min-h-screen pt-32 pb-20 relative overflow-hidden">
     
-    {{-- Background Grid --}}
     <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
 
     <div class="max-w-4xl mx-auto px-6 relative z-10">
         
-        {{-- Header --}}
         <x-page-header 
             title="Terms of Service" 
             subtitle="Please read our terms and conditions carefully" 
         />
 
-        {{-- Content --}}
         <article class="prose prose-invert prose-lg max-w-none text-[#a0a0a0]">
             <p>
                 Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the <strong>AkashAp.dev</strong> website (the "Service"). Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms.

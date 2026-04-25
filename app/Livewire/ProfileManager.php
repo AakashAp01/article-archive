@@ -16,22 +16,19 @@ class ProfileManager extends Component
 {
     use WithFileUploads;
 
-    // Profile Data
     public $name;
     public $email;
     public $bio;
     public $website;
 
-    // Avatar Management
     public $avatar;
     public $current_avatar_url;
 
-    // Password Management
     public $current_password;
     public $password;
     public $password_confirmation;
     public $isDeleteModalOpen = false;
-    // Account Deletion
+    
     public $delete_password = '';
 
     public function mount()
@@ -44,7 +41,6 @@ class ProfileManager extends Component
         $this->current_avatar_url = $user->avatar ?? null;
     }
 
-    // --- 1. Avatar Logic
     public function updatedAvatar()
     {
         $this->validate([
@@ -67,7 +63,6 @@ class ProfileManager extends Component
 
         $user->update(['avatar' => $filename]);
 
-        // Refresh State
         $this->current_avatar_url = $user->avtar;
         $this->avatar = null;
 
@@ -78,7 +73,6 @@ class ProfileManager extends Component
         ]);
     }
 
-    // --- 2. Profile Details Update ---
     public function updateProfile()
     {
         $user = Auth::user();
@@ -104,7 +98,6 @@ class ProfileManager extends Component
         ]);
     }
 
-    // --- 3. Password Update ---
     public function updatePassword()
     {
         $this->validate([
@@ -133,7 +126,6 @@ class ProfileManager extends Component
         $this->isDeleteModalOpen = true;
     }
 
-    // --- 4. Account Termination
     public function deleteAccount()
     {
         $this->validate([

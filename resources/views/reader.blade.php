@@ -26,7 +26,6 @@
     @endphp
 
     <style>
-
         :root {
             --accent: {{ $hex }};
             --accent-rgb: {{ $accentColor }};
@@ -189,18 +188,18 @@
                 <ul class="space-y-4 border-l border-white/5 pl-6" id="toc-list">
                 </ul>
 
-                <div class="mt-3 pt-3 border-t border-white/10 border-dashed">
-                    <div class="flex flex-wrap gap-2">
-                        @if (isset($article->tags) && is_array($article->tags))
+                @if (isset($article->tags) && is_array($article->tags))
+                    <div class="mt-3 pt-3 border-t border-white/10 border-dashed">
+                        <div class="flex flex-wrap gap-2">
                             @foreach ($article->tags as $tag)
                                 <x-badge :text="'#' . $tag" class="cursor-default hover:text-white transition-colors"
                                     style="border-color: rgba({{ $accentColor }}, 0.1);"
                                     onmouseover="this.style.borderColor='var(--accent)'; this.style.color='white';"
                                     onmouseout="this.style.borderColor='rgba({{ $accentColor }}, 0.1)'; this.style.color='#888';" />
                             @endforeach
-                        @endif
+                        </div>
                     </div>
-                </div>
+                @endif
 
                 <div class="mt-10">
                     <x-section-header title="Recommended" />
@@ -267,7 +266,8 @@
                         </span>
                     </div>
 
-                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 tracking-tight leading-tight uppercase font-display">
+                    <h1
+                        class="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 tracking-tight leading-tight uppercase font-display">
                         {{ $article->title }}</h1>
                     <p class="text-xl md:text-2xl text-[#888] font-light leading-relaxed pl-8 italic"
                         style="border-left: 3px solid var(--accent);">{{ $article->excerpt }}</p>
@@ -281,9 +281,13 @@
             @livewire('article-interactions', ['article' => $article])
 
             <nav class="border-t border-white/10 pt-10 mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <x-button type="a" href="{{ (auth()->check() && auth()->user()->role === 'admin') ? route('dashboard') : route('welcome') }}" variant="outline" class="group !p-5 !justify-start gap-4 h-full">
-                    <div class="w-12 h-12 shrink-0 rounded-full border border-white/10 flex items-center justify-center group-hover:border-accent group-hover:text-accent transition-colors">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <x-button type="a"
+                    href="{{ auth()->check() && auth()->user()->role === 'admin' ? route('dashboard') : route('welcome') }}"
+                    variant="outline" class="group !p-5 !justify-start gap-4 h-full">
+                    <div
+                        class="w-12 h-12 shrink-0 rounded-full border border-white/10 flex items-center justify-center group-hover:border-accent group-hover:text-accent transition-colors">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <path d="m15 18-6-6 6-6" />
                         </svg>
                     </div>
@@ -294,13 +298,18 @@
                 </x-button>
 
                 @if ($nextRead)
-                    <x-button type="a" href="{{ route('article.show', $nextRead->slug) }}" variant="outline" class="group !p-5 !justify-end gap-4 h-full">
+                    <x-button type="a" href="{{ route('article.show', $nextRead->slug) }}" variant="outline"
+                        class="group !p-5 !justify-end gap-4 h-full">
                         <div class="flex flex-col text-right">
-                            <span class="text-[10px] text-[#666] uppercase tracking-[0.2em] font-mono mb-1">Read Next</span>
-                            <span class="text-sm font-bold text-gray-300 group-hover:text-white line-clamp-1 truncate">{{ Str::limit(strtoupper($nextRead->title), 20) }}</span>
+                            <span class="text-[10px] text-[#666] uppercase tracking-[0.2em] font-mono mb-1">Read
+                                Next</span>
+                            <span
+                                class="text-sm font-bold text-gray-300 group-hover:text-white line-clamp-1 truncate">{{ Str::limit(strtoupper($nextRead->title), 20) }}</span>
                         </div>
-                        <div class="w-12 h-12 shrink-0 rounded-full border border-white/10 flex items-center justify-center group-hover:border-accent group-hover:text-accent transition-colors">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <div
+                            class="w-12 h-12 shrink-0 rounded-full border border-white/10 flex items-center justify-center group-hover:border-accent group-hover:text-accent transition-colors">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
                                 <path d="m9 6 6 6-6 6" />
                             </svg>
                         </div>
@@ -423,6 +432,5 @@
                 alert('Link copied to clipboard!');
             }
         }
-
     </script>
 @endsection
